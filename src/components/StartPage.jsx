@@ -6,14 +6,14 @@ import '../css/startpage.css';
 
 function StartPage() {   
     return (
-        <div style={{ background: '#F5F5F5' }}>
+        <div style={{ background: '#e2e2e2' }}>
             <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', height: '100%', color: 'white', justifyContent: 'center', alignItems: 'center' }}>
                 <img className="logoStyle" src={logo} alt="Logo" />
                 <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', margin: '1.5rem' }}>
                     <TextField id="name" label="Enter your name" value={""} variant="outlined" size="small" />
                     <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'center' }}>
-                        <Link to="/chat">
-                            <Button variant="contained" style={{background: 'black', color: 'white'}}>Let's wheek!</Button>
+                        <Link to="/chat" style={{textDecoration: 'none'}}>
+                            <Button variant="contained" style={{background: 'black', color: 'white'}}>LET'S WHEEK!</Button>
                         </Link>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, Divider, Button, TextField } from '@material-ui/core';
+import { Link } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -25,30 +26,37 @@ function ChatRooms() {
 
     return (
         <div className="roomStyle">
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '2rem 0rem'}}>
-                <Typography variant="h5">
-                    CHAT ROOMS
-                </Typography>
+            <div className="titleBox">
+                <Typography variant="h5" style={{textDecoration: 'underline'}}>CHAT ROOMS</Typography>
             </div>
 
             <ul>
-                <li><Typography variant="h6">ROOM {1}</Typography></li>
-                <li><Typography variant="h6">ROOM {2}</Typography></li>
-                <li><Typography variant="h6">ROOM {3}</Typography></li>
+                <Typography variant="h6">
+                    <li>ROOM {1}</li>
+                    <li>ROOM {2}</li>
+                    <li>ROOM {3}</li>
+                </Typography>
             </ul>
 
             <Divider />
 
             <ul>
-                <li><Typography variant="h6">ROOM {4}<LockIcon style={{marginLeft: '0.5rem'}}/></Typography></li>
-                <li><Typography variant="h6">ROOM {5}<LockIcon style={{marginLeft: '0.5rem'}}/></Typography></li>
-                <li><Typography variant="h6">ROOM {6}<LockIcon style={{marginLeft: '0.5rem'}}/></Typography></li>
+                <Typography variant="h6">
+                    <li>ROOM {4}<LockIcon style={{marginLeft: '0.5rem'}}/></li>
+                    <li>ROOM {5}<LockIcon style={{marginLeft: '0.5rem'}}/></li>
+                    <li>ROOM {6}<LockIcon style={{marginLeft: '0.5rem'}}/></li>
+                </Typography>
             </ul>
 
             <Divider />
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" onClick={openCreateRoomModal} style={{margin: '1rem', background: 'black', color: 'white'}}>CREATE ROOM</Button>
+                <Button variant="contained" onClick={openCreateRoomModal} size="small" style={{margin: '2rem 0 1rem 0', background: 'black', color: 'white'}}>CREATE ROOM</Button>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Link to="/" style={{textDecoration: 'none'}}>
+                    <Button variant="contained" size="small" style={{background: 'black', color: 'white', marginBottom: '2rem'}}>LOG OUT</Button>
+                </Link>
             </div>
 
             {/* Create room modal */}
