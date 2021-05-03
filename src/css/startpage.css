@@ -1,10 +1,11 @@
 @media (min-width: 1px) {
     .logoStyle {
-        display: flex;
-        width: 10rem;
+        width: 12rem;
     }
-    .buttonStyle {
-        color: green;
-        background: red;
+    .MuiFormLabel-root.Mui-focused {
+        color: rgb(20, 20, 20) !important;
+    }
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+        border-color: rgb(20, 20, 20) !important;
     }
 }
