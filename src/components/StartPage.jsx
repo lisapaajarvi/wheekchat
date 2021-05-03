@@ -14,7 +14,7 @@ function StartPage() {
                     <TextField id="name" label="Enter your name" value={""} variant="outlined" size="small" />
                     <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'center' }}>
                         <Link to="/chat">
-                            <Button variant="contained">Let's wheek!</Button>
+                            <Button variant="contained" style={{background: 'black', color: 'white'}}>Let's wheek!</Button>
                         </Link>
                     </div>
                 </div>
