@@ -1,0 +1,15 @@
+.mainStyle {
+    display: flex;
+}
+
+@media (min-width: 1px) {
+    .mainStyle {
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 768px) {
+    .mainStyle {
+        flex-direction: row;
+    }
+}

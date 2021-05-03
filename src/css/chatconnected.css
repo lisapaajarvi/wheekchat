@@ -1,0 +1,19 @@
+.connectedStyle {
+    background: #e2e2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+@media (min-width: 1px) {
+    .connectedStyle {
+        width: 100%;
+    }
+}
+@media (min-width: 768px) {
+    .connectedStyle {
+        width: 75%;
+    }
+}

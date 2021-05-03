@@ -1,0 +1,14 @@
+.roomStyle {
+    background: #c7c7c7;
+}
+
+@media (min-width: 1px) {
+    .roomStyle {
+        width: 100%;
+    }
+}
+@media (min-width: 768px) {
+    .roomStyle {
+        width: 25%;
+    }
+}
