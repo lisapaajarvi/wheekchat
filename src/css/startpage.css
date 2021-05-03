@@ -1,0 +1,10 @@
+@media (min-width: 1px) {
+    .logoStyle {
+        display: flex;
+        width: 10rem;
+    }
+    .buttonStyle {
+        color: green;
+        background: red;
+    }
+}
