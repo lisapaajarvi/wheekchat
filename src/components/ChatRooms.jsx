@@ -1,9 +1,28 @@
 import React from 'react';
-import '../css/chatrooms.css';
-import { Typography, Divider, Button } from '@material-ui/core';
+import { Typography, Divider, Button, TextField } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import LockIcon from '@material-ui/icons/Lock';
+import '../css/chatrooms.css';
 
 function ChatRooms() {   
+    const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
+
+    const handleCreateRoomClose = () => {
+        setOpenCreateRoom(false);
+    };
+
+    function openCreateRoomModal() {
+        setOpenCreateRoom(true);
+    }
+
+    // const handleCreateRoomName = (e) => {
+    //     setCreateRoom(e.target.value)
+    // }
+
+
     return (
         <div className="roomStyle">
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '2rem 0rem'}}>
@@ -29,9 +48,29 @@ function ChatRooms() {
             <Divider />
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" style={{margin: '1rem', background: 'black', color: 'white'}}>CREATE ROOM</Button>
+                <Button variant="contained" onClick={openCreateRoomModal} style={{margin: '1rem', background: 'black', color: 'white'}}>CREATE ROOM</Button>
             </div>
 
+            {/* Create room modal */}
+            <Dialog open={openCreateRoom} onClose={handleCreateRoomClose} aria-labelledby="form-dialog-create">
+                 <DialogTitle id="create">Create new room</DialogTitle>
+                 <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Room name"
+                        type="text"
+                        // onChange={handleCreateRoomName}
+                        defaultValue={""}
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCreateRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
+                    <Button onClick={handleCreateRoomClose} variant="contained" color="primary" style={{background: 'black', color: 'white'}}>CREATE</Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )    
 }

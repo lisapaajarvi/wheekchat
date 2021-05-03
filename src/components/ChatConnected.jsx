@@ -1,6 +1,6 @@
 import React from 'react';
-import '../css/chatconnected.css';
 import { Typography, TextField, Button } from '@material-ui/core';
+import '../css/chatconnected.css';
 
 function ChatConnected() {   
     return (
@@ -15,14 +15,14 @@ function ChatConnected() {
                     <div>
                         <Typography>
                             CHAT TEXT GOES HERE
-                    </Typography>
+                        </Typography>
                     </div>
                 </div>
             </div>
             <div style={{ background: 'darkgray', width: '80%', borderLeft: '1px solid black', borderRight: '1px solid black', borderBottom: '1px solid black', }}>
                 <Typography>
                     Somebody is typing...
-                    </Typography>
+                </Typography>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '2rem' }}>
                 <TextField id="sendtext" label="Enter text" value={""} variant="outlined" size="small" />

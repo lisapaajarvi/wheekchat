@@ -1,6 +1,5 @@
 import React from 'react';
-import { TextField } from '@material-ui/core';
-import { Container, Button } from '@material-ui/core';
+import { Container, Button, TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import logo from '../assets/logo.png';
 import '../css/startpage.css';
