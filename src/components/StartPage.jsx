@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Button, TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import logo from '../assets/logo.png';
 import '../css/startpage.css';
+import UserContext from './contexts/UserContext'
 
 function StartPage() {
-    const [user, setUser] = React.useState('');
-
+    const [name, setName] = React.useState('');
+    const {user, setUser} = useContext(UserContext);
+    
+    const handleOnClick = () => {
+        setUser(name)
+    }
     const handleUserChange = (e) => {
-        setUser(e.target.value)
+        setName(e.target.value)
     }
     return (
         <div style={{ background: '#e2e2e2' }}>
@@ -18,7 +23,7 @@ function StartPage() {
                     <TextField id="name" onChange={handleUserChange} label="Enter your name" value={user} variant="outlined" size="small" />
                     <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'center' }}>
                         <Link to= "/chat" style={{textDecoration: 'none'}}>
-                            <Button variant="contained" style={{background: 'black', color: 'white'}}>LET'S WHEEK!</Button>
+                            <Button variant="contained" onClick={handleOnClick} style={{background: 'black', color: 'white'}}>LET'S WHEEK!</Button>
                         </Link>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Typography, Divider, Button, TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
@@ -8,8 +8,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import LockIcon from '@material-ui/icons/Lock';
 import '../css/chatrooms.css';
 import socketClient  from "socket.io-client";
+import UserContext from './contexts/UserContext'
 
-function ChatRooms(props) {   
+function ChatRooms() {  
+    const { user } = useContext(UserContext); 
+    console.log(user)
     var socket = socketClient ();
     socket.on('connect', () => {
        console.log(`I'm connected with the back-end`);
@@ -17,7 +20,6 @@ function ChatRooms(props) {
     socket.on("user-connected", (data) => {
         console.log("User has connected:", data)
     })
-    console.log(props.location.state)
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
 
     const handleCreateRoomClose = () => {
@@ -38,7 +40,7 @@ function ChatRooms(props) {
             <div className="titleBox">
                 <Typography variant="h5" style={{textDecoration: 'underline'}}>CHAT ROOMS</Typography>
             </div>
-
+            <p>Welcome {user}</p>
             <ul>
                 <Typography variant="h6">
                     <li>ROOM {1}</li>
