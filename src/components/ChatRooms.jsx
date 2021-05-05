@@ -7,19 +7,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import LockIcon from '@material-ui/icons/Lock';
 import '../css/chatrooms.css';
-import socketClient  from "socket.io-client";
 import UserContext from './contexts/UserContext'
 
-function ChatRooms() {  
-    const { user } = useContext(UserContext); 
+function ChatRooms() {
+    const { user } = useContext(UserContext);
     console.log(user)
-    var socket = socketClient ();
-    socket.on('connect', () => {
-       console.log(`I'm connected with the back-end`);
-    });
-    socket.on("user-connected", (data) => {
-        console.log("User has connected:", data)
-    })
+    
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
 
     const handleCreateRoomClose = () => {
@@ -91,7 +84,7 @@ function ChatRooms() {
                 </DialogActions>
             </Dialog>
         </div>
-    )    
+    )
 }
 
 export default ChatRooms;
