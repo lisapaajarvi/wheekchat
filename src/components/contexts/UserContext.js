@@ -7,22 +7,27 @@ export const UserConsumer = UserContext.Consumer
 
 
 export function UserProvider({ children }) {
-    const [user, setUser] = React.useState();
+    const [user, setUser] = useState();
+    const [room, setRoom] = useState();
     const [socket] = useState(io());
-
+    const [messages, setMessages] = useState([]);
+    
     useEffect(() => {
+        const incomingMessage = (message) => {
+            let messageList = messages;
+            messageList.push(message);
+            setMessages(messageList)
+            console.log(messages);
+        }
         socket.on('connect', () => {
             console.log(`I'm connected with the back-end`);
         });
         socket.on('message', incomingMessage);
-
+        
         // socket.on('join-room', incomingMessage);
         // socket.on('etc..', incomingMessage);
-    }, [socket])
+    }, [messages, socket])
 
-    const incomingMessage = (message) => {
-        console.log(message);
-    }
 
     const sendMessage = (message) => {
         socket.send(user + ": " + message)
@@ -33,13 +38,16 @@ export function UserProvider({ children }) {
         socket.emit('set-name', username);
     }
 
-    const joinRoom = (room) => {
-        socket.emit('join-room', room);
+    const joinRoom = (roomName) => {
+        setRoom(roomName);
+        socket.emit('join-room', roomName);
     }
 
     return (
         <UserContext.Provider value={{
+            room,
             user,
+            messages,
             setUser,
             saveUser,
             joinRoom,

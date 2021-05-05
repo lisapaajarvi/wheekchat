@@ -5,8 +5,9 @@ import UserContext from './contexts/UserContext';
 
 function ChatConnected() {
     const [message, setMessage] = useState('')
-    const { sendMessage } = useContext(UserContext)
+    const { user, room, messages, sendMessage } = useContext(UserContext)
 
+    console.log("Nu tänker jag göra en html tabell med " + messages.length + "mess")
     const handleClick = () => {
         sendMessage(message)
         setMessage('')
@@ -19,10 +20,18 @@ function ChatConnected() {
     return (
         <div className="connectedStyle">
             <div className="titleBox">
-                <Typography variant="h5" style={{textDecoration: 'underline'}}>ROOM {1}</Typography>
+                <Typography variant="h5" style={{textDecoration: 'underline'}}>{user} @ {room}</Typography>
             </div>
             <div className="chatBox">
                 <Typography>CHAT TEXT GOES HERE</Typography>
+                <ul>
+                    {messages.map((chatMessage, index) => (
+                 
+                        <li key={index}>
+                            {chatMessage}
+                        </li>
+                    ))}
+                </ul>
             </div>
             <div className="somebodyTypingBox">
                 <Typography>Somebody is typing...</Typography>
