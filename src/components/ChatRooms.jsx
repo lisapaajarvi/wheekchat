@@ -10,7 +10,7 @@ import '../css/chatrooms.css';
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { user, createRoom } = useContext(UserContext);
+    const { user, joinRoom } = useContext(UserContext);
     console.log(user)
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
@@ -26,7 +26,7 @@ function ChatRooms() {
     }
 
     function onCreateRoomClick() {
-        createRoom(roomName);
+        joinRoom(roomName);
         setOpenCreateRoom(false);
         setRoomName('');
     }

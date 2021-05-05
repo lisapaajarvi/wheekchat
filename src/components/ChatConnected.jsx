@@ -1,13 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Typography, TextField, Button } from '@material-ui/core';
 import '../css/chatconnected.css';
 import UserContext from './contexts/UserContext';
 
 function ChatConnected() {
+    const [message, setMessage] = useState('')
     const { sendMessage } = useContext(UserContext)
 
-    const handleButtonPress = () => {
-        sendMessage('HELLO!!!!')
+    const handleClick = () => {
+        sendMessage(message)
+        setMessage('')
+    }
+
+    const handleMessageChange = (e) => {
+        setMessage(e.target.value)
     }
 
     return (
@@ -22,11 +28,17 @@ function ChatConnected() {
                 <Typography>Somebody is typing...</Typography>
             </div>
             <div className="sendNewTextBox">
-                <TextField id="sendtext" label="Enter text" value={""} variant="outlined" size="small" />
+                <TextField 
+                    id="sendtext" 
+                    label="Enter text" 
+                    value={message} 
+                    onChange={handleMessageChange}
+                    variant="outlined" 
+                    size="small" />
                 <Button
                     variant="contained"
                     style={{ marginLeft: '1rem', background: 'black', color: 'white' }}
-                    onClick={handleButtonPress}
+                    onClick={handleClick}
                 >
                     SEND
                 </Button>

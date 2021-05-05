@@ -25,7 +25,7 @@ export function UserProvider({ children }) {
     }
 
     const sendMessage = (message) => {
-        socket.send(message)
+        socket.send(user + ": " + message)
     }
 
     const saveUser = (username) => {
@@ -33,8 +33,8 @@ export function UserProvider({ children }) {
         socket.emit('set-name', username);
     }
 
-    const createRoom = (room) => {
-        socket.emit('create', room);
+    const joinRoom = (room) => {
+        socket.emit('join-room', room);
     }
 
     return (
@@ -42,7 +42,7 @@ export function UserProvider({ children }) {
             user,
             setUser,
             saveUser,
-            createRoom,
+            joinRoom,
             sendMessage
         }}>
             {children}
