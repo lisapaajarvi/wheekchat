@@ -30,6 +30,11 @@ io.on("connection", socket => {
       io.emit("message", "A user has left the chat");
       console.log("user disconnected: ", socket.id);
     });    
+
+    socket.on('create', (room) => {
+      socket.join(room);
+      console.log("room created: ", room)
+    });
 })
 
 server.listen(4000, () => console.log("server is running on port 4000"));

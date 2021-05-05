@@ -15,6 +15,7 @@ export function UserProvider({ children }) {
             console.log(`I'm connected with the back-end`);
         });
         socket.on('message', incomingMessage);
+
         // socket.on('join-room', incomingMessage);
         // socket.on('etc..', incomingMessage);
     }, [socket])
@@ -32,11 +33,16 @@ export function UserProvider({ children }) {
         socket.emit('set-name', username);
     }
 
+    const createRoom = (room) => {
+        socket.emit('create', room);
+    }
+
     return (
         <UserContext.Provider value={{
             user,
             setUser,
             saveUser,
+            createRoom,
             sendMessage
         }}>
             {children}
