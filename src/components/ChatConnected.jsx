@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Typography, TextField, Button } from '@material-ui/core';
 import '../css/chatconnected.css';
+import UserContext from './contexts/UserContext';
 
-function ChatConnected() {   
+function ChatConnected() {
+    const { sendMessage } = useContext(UserContext)
+
+    const handleButtonPress = () => {
+        sendMessage('HELLO!!!!')
+    }
+
     return (
         <div className="connectedStyle">
             <div className="titleBox">
@@ -16,7 +23,13 @@ function ChatConnected() {
             </div>
             <div className="sendNewTextBox">
                 <TextField id="sendtext" label="Enter text" value={""} variant="outlined" size="small" />
-                <Button variant="contained" style={{ marginLeft: '1rem', background: 'black', color: 'white' }}>SEND</Button>
+                <Button
+                    variant="contained"
+                    style={{ marginLeft: '1rem', background: 'black', color: 'white' }}
+                    onClick={handleButtonPress}
+                >
+                    SEND
+                </Button>
             </div>
         </div>
     )    

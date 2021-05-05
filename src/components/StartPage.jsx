@@ -10,6 +10,7 @@ function StartPage() {
     const {user, setUser} = useContext(UserContext);
     
     const handleOnClick = () => {
+        // send name to server
         setUser(name)
     }
     const handleUserChange = (e) => {

@@ -15,10 +15,15 @@ io.on("connection", socket => {
   
     socket.broadcast.emit("user-connected", socket.id);
   
-     socket.on("message", (data) => {
-       userInfo[socket.id] = {name: data};
-       console.log(userInfo);
-     });
+    socket.on("set-name", (data) => {
+      userInfo[socket.id] = { name: data };
+      console.log(userInfo);
+    });
+
+    socket.on('message', (message) => {
+      console.log('Message from Client:', message);
+      io.send(message)
+    })
 
     socket.on("disconnect", () => {
       // ta bort userInfo!
