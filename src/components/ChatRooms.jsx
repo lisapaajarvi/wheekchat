@@ -10,15 +10,20 @@ import '../css/chatrooms.css';
 import socketClient  from "socket.io-client";
 import UserContext from './contexts/UserContext'
 
-function ChatRooms() {  
-    const { user } = useContext(UserContext); 
+function ChatRooms() {
+    const { user } = useContext(UserContext);
     console.log(user)
     var socket = socketClient ();
     socket.on('connect', () => {
        console.log(`I'm connected with the back-end`);
+       socket.send(user);
     });
-    socket.on("user-connected", (data) => {
-        console.log("User has connected:", data)
+
+    // socket.on("message", data => {
+    //     console.log(data);
+    // });
+    socket.on("user-connected", (id) => {
+        console.log("User has connected:", id)
     })
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
 
@@ -91,7 +96,7 @@ function ChatRooms() {
                 </DialogActions>
             </Dialog>
         </div>
-    )    
+    )
 }
 
 export default ChatRooms;

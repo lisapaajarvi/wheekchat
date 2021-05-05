@@ -3,7 +3,9 @@ const http = require("http");
 const app = express();
 const server = http.createServer(app);
 const socket = require("socket.io");
-const io = socket(server);
+const io = socket(server, {pingTimeout: 25000});
+
+let userInfo = {};
 
 io.on("connection", socket => {
 
@@ -13,9 +15,15 @@ io.on("connection", socket => {
   
     socket.broadcast.emit("user-connected", socket.id);
   
+     socket.on("message", (data) => {
+       userInfo[socket.id] = {name: data};
+       console.log(userInfo);
+     });
+
     socket.on("disconnect", () => {
+      // ta bort userInfo!
       io.emit("message", "A user has left the chat");
-      console.log("user disconnected");
+      console.log("user disconnected: ", socket.id);
     });    
 })
 
