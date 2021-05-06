@@ -7,11 +7,10 @@ import UserContext from './contexts/UserContext'
 
 function StartPage() {
     const [name, setName] = React.useState('');
-    const {user, setUser} = useContext(UserContext);
+    const { saveUser } = useContext(UserContext);
     
     const handleOnClick = () => {
-        // send name to server
-        setUser(name)
+        saveUser(name)
     }
     const handleUserChange = (e) => {
         setName(e.target.value)
@@ -21,7 +20,7 @@ function StartPage() {
             <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', height: '100%', color: 'white', justifyContent: 'center', alignItems: 'center' }}>
                 <img className="logoStyle" src={logo} alt="Logo" />
                 <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', margin: '1.5rem' }}>
-                    <TextField id="name" onChange={handleUserChange} label="Enter your name" value={user} variant="outlined" size="small" />
+                    <TextField id="name" onChange={handleUserChange} label="Enter your name" value={name} variant="outlined" size="small" />
                     <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'center' }}>
                         <Link to= "/chat" style={{textDecoration: 'none'}}>
                             <Button variant="contained" onClick={handleOnClick} style={{background: 'black', color: 'white'}}>LET'S WHEEK!</Button>

@@ -10,10 +10,12 @@ import '../css/chatrooms.css';
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { user } = useContext(UserContext);
+    const { user, joinRoom } = useContext(UserContext);
     console.log(user)
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
+
+    const [roomName, setRoomName] = React.useState('');
 
     const handleCreateRoomClose = () => {
         setOpenCreateRoom(false);
@@ -23,10 +25,14 @@ function ChatRooms() {
         setOpenCreateRoom(true);
     }
 
-    // const handleCreateRoomName = (e) => {
-    //     setCreateRoom(e.target.value)
-    // }
-
+    function onCreateRoomClick() {
+        joinRoom(roomName);
+        setOpenCreateRoom(false);
+        setRoomName('');
+    }
+    const handleRoomName = (e) => {
+         setRoomName(e.target.value)
+    }
 
     return (
         <div className="roomStyle">
@@ -73,14 +79,14 @@ function ChatRooms() {
                         id="name"
                         label="Room name"
                         type="text"
-                        // onChange={handleCreateRoomName}
-                        defaultValue={""}
+                        onChange={handleRoomName}
+                        value={roomName}
                         fullWidth
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCreateRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
-                    <Button onClick={handleCreateRoomClose} variant="contained" color="primary" style={{background: 'black', color: 'white'}}>CREATE</Button>
+                    <Button onClick={onCreateRoomClick} variant="contained" color="primary" style={{background: 'black', color: 'white'}}>CREATE</Button>
                 </DialogActions>
             </Dialog>
         </div>
