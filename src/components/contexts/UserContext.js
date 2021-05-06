@@ -12,6 +12,8 @@ export function UserProvider({ children }) {
     const [socket] = useState(io());
     const [messages, setMessages] = useState([]);
     
+
+
     useEffect(() => {
         const incomingMessage = (message) => {
             let messageList = messages;
@@ -24,10 +26,15 @@ export function UserProvider({ children }) {
         });
         socket.on('message', incomingMessage);
         
+        socket.on('rooms', incomingRooms);
         // socket.on('join-room', incomingMessage);
         // socket.on('etc..', incomingMessage);
     }, [messages, socket])
 
+
+    const incomingRooms = (rooms) => {
+        console.log(rooms);
+    }
 
     const sendMessage = (message) => {
         socket.send(user + ": " + message)

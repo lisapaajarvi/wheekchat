@@ -7,12 +7,32 @@ const io = socket(server, {pingTimeout: 25000});
 
 let userInfo = {};
 
+let rooms = [
+  {
+  name: 'room 1',
+  users: [{
+    name: 'Tristan'
+  }]
+  },
+  {
+    name: 'room 2',
+    users: [
+    {
+      name: 'Tony'
+    },
+    {
+      name: 'Jonas'
+    },
+  ]
+  }
+];
+
 io.on("connection", socket => {
 
     console.log("Client was connected: ", socket.id);
-
+    console.log(rooms[1].users)
     socket.emit("welcome-message", "Welcome");
-  
+    socket.emit("rooms", rooms);
     socket.broadcast.emit("user-connected", socket.id);
   
     socket.on("set-name", (data) => {
