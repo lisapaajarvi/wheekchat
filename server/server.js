@@ -27,6 +27,16 @@ let rooms = [
   }
 ];
 
+// function getRooms() {
+//   const sockets = Object.values(io.sockets.sockets)
+//   let rooms: string[] = []
+//   for (const socket of sockets) {
+//   const actualRooms = Object.keys(socket.rooms).filter(room => room !== socket.id)
+//   rooms.push(...actualRooms)
+//   }
+//   return [...new Set(rooms)]
+//   }
+
 io.on("connection", socket => {
 
     console.log("Client was connected: ", socket.id);
@@ -52,12 +62,18 @@ io.on("connection", socket => {
     });    
 
     socket.on('join-room', (room) => {
+      // lämna rum socket.leave
       socket.join(room);
       addRoom(room)
       socket.emit("rooms", rooms);
       console.log("joined room: ", room)
 
       console.log(socket.rooms)
+    });
+
+    socket.on('leave-room', (room) => {
+      socket.leave(room);
+
     });
 })
 

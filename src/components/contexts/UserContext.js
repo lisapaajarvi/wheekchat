@@ -17,7 +17,7 @@ export function UserProvider({ children }) {
 
     useEffect(() => {
         const incomingMessage = (message) => {
-            let messageList = messages;
+            let messageList = [...messages];
             messageList.push(message);
             setMessages(messageList)
             console.log(messages);
