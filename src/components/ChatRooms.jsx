@@ -10,8 +10,9 @@ import '../css/chatrooms.css';
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { user, joinRoom } = useContext(UserContext);
+    const { rooms, user, joinRoom } = useContext(UserContext);
     console.log(user)
+    console.log(rooms)
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
 
@@ -42,9 +43,21 @@ function ChatRooms() {
             <p>Welcome {user}</p>
             <ul>
                 <Typography variant="h6">
-                    <li>ROOM {1}</li>
-                    <li>ROOM {2}</li>
-                    <li>ROOM {3}</li>
+                    {rooms.map((chatroom, index) => (
+                        
+                        <li key={index}>
+                            {chatroom.name}
+                            {chatroom.users.map((user, index) => (
+                        <ul>
+                        <li key={index}>
+                            {user.name}
+                        </li>
+                        </ul>
+                    ))
+                            }
+                         
+                        </li>
+                    ))}
                 </Typography>
             </ul>
 

@@ -11,6 +11,7 @@ export function UserProvider({ children }) {
     const [room, setRoom] = useState();
     const [socket] = useState(io());
     const [messages, setMessages] = useState([]);
+    const [rooms, setRooms] = useState([]);
     
 
 
@@ -32,8 +33,9 @@ export function UserProvider({ children }) {
     }, [messages, socket])
 
 
-    const incomingRooms = (rooms) => {
-        console.log(rooms);
+    const incomingRooms = (chatrooms) => {
+        setRooms(chatrooms)
+        console.log(chatrooms);
     }
 
     const sendMessage = (message) => {
@@ -54,6 +56,7 @@ export function UserProvider({ children }) {
         <UserContext.Provider value={{
             room,
             user,
+            rooms,
             messages,
             setUser,
             saveUser,
