@@ -43,19 +43,16 @@ function ChatRooms() {
             <p>Welcome {user}</p>
             <ul>
                 <Typography variant="h6">
-                    {rooms.map((chatroom, index) => (
-                        
+                    {rooms.map((chatroom, index) => (                       
                         <li key={index}>
                             {chatroom.name}
                             {chatroom.users.map((user, index) => (
-                        <ul>
-                        <li key={index}>
-                            {user.name}
-                        </li>
-                        </ul>
-                    ))
-                            }
-                         
+                            <ul>
+                                <li key={index}>
+                                    {user.name}
+                                </li>
+                            </ul>
+                            ))} 
                         </li>
                     ))}
                 </Typography>

@@ -53,9 +53,17 @@ io.on("connection", socket => {
 
     socket.on('join-room', (room) => {
       socket.join(room);
+      addRoom(room)
+      socket.emit("rooms", rooms);
       console.log("joined room: ", room)
+
       console.log(socket.rooms)
     });
 })
+
+function addRoom(room) {
+  const newRoom = {name: room, users: [{name:''}]};
+  rooms.push(newRoom);
+}
 
 server.listen(4000, () => console.log("server is running on port 4000"));
