@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Typography, Divider, Button, TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
@@ -7,9 +7,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import LockIcon from '@material-ui/icons/Lock';
 import '../css/chatrooms.css';
-// import UserContext from './contexts/UserContext'
+import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
+    const { user } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
 
@@ -20,7 +21,7 @@ function ChatRooms() {
     function openCreateRoomModal() {
         setOpenCreateRoom(true);
     }
-
+    
     function onCreateRoomClick() {
         // joinRoom(roomName);
         setOpenCreateRoom(false);
@@ -29,6 +30,8 @@ function ChatRooms() {
     const handleRoomName = (e) => {
         //  setRoomName(e.target.value)
     }
+    
+    console.log(user)
 
     return (
         <div className="roomStyle">

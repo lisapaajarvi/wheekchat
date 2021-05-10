@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Button, TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import logo from '../assets/logo.png';
@@ -10,7 +10,7 @@ function StartPage() {
     const { saveUser } = useContext(UserContext);
     
     const handleOnClick = () => {
-        // saveUser(name)
+        saveUser(name)
     }
     const handleUserChange = (e) => {
         setName(e.target.value)
