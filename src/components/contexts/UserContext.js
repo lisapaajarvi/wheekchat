@@ -47,10 +47,12 @@ export function UserProvider({ children }) {
         socket.emit('login', name);
     }
 
-    // const joinRoom = (roomName) => {
-    //     setRoom(roomName);
-    //     socket.emit('join-room', roomName);
-    // }
+    const joinRoom = (roomName) => {
+        // setRoom(roomName);
+        socket.emit('join-room', roomName);
+        console.log(roomName)
+    }
+
 
     return (
         <UserContext.Provider value={{
@@ -60,7 +62,7 @@ export function UserProvider({ children }) {
             // messages,
             setUser,
             saveUser,
-            // joinRoom,
+            joinRoom,
             // sendMessage
         }}>
             {children}

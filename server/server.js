@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors')
 const server = http.createServer(app);
 const socket = require("socket.io");
-const io = socket(server, {pingTimeout: 25000});
+const io = socket(server, {pingTimeout: 120000});
 
 app.use(cors())
 
@@ -15,13 +15,22 @@ const addUser = (id, name) => {
     const existingUser = users.find(user => user.name.trim().toLowerCase() === name.trim().toLowerCase())
 
     if (existingUser) return { error: "Username has already been taken" }
-    // if (!name && !room) return { error: "Username and room are required" }
     if (!name) return { error: "Username is required" }
-    // if (!room) return { error: "Room is required" }
 
     const user = { id, name, room: '' }
     users.push(user)
     return { user }
+}
+
+const addRoom = (room, id) => {
+    // const existingUser = users.find(user => user.name.trim().toLowerCase() === name.trim().toLowerCase())
+    // const user = { id, name, room: {room} }
+    let user = users.find(user => user.id === id)
+    user.room = room
+    console.log(users)
+
+    // users.push(...user)
+    // return { user }
 }
 
 // const getUser = id => {
@@ -45,15 +54,18 @@ const getUsers = (room) => users.filter(user => user.room === room)
 // SERVER CONNECTION
 io.on("connection", socket => {
   
-  // socket.on("set-name", (data) => {
-  //         users[socket.id] = { name: data };
-  //         console.log(users);
-  // });
-  
   socket.on('login', (name) => {
     addUser(socket.id, name)
-    console.log(users)
+    // console.log(users)
 })
+
+    socket.on('join-room', (room) => {
+      // lämna rum socket.leave
+      socket.join(room);
+      addRoom(room, socket.id)
+      // socket.emit("rooms", rooms);
+      console.log("joined room: ", room)
+    });
 
 //   socket.on('login', ({ name, room }, callback) => {
 //     const { user, error } = addUser(socket.id, name, room)

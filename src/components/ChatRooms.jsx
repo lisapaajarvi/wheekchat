@@ -10,9 +10,10 @@ import '../css/chatrooms.css';
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { user } = useContext(UserContext);
+    const { user, joinRoom } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
+    const [roomName, setRoomName] = React.useState('');
 
     const handleCreateRoomClose = () => {
         setOpenCreateRoom(false);
@@ -23,15 +24,16 @@ function ChatRooms() {
     }
     
     function onCreateRoomClick() {
-        // joinRoom(roomName);
+        joinRoom(roomName);
         setOpenCreateRoom(false);
-        // setRoomName('');
+        setRoomName('');
     }
     const handleRoomName = (e) => {
-        //  setRoomName(e.target.value)
+        setRoomName(e.target.value)
     }
     
     console.log(user)
+    // console.log(roomName)
 
     return (
         <div className="roomStyle">
@@ -88,7 +90,7 @@ function ChatRooms() {
                         label="Room name"
                         type="text"
                         onChange={handleRoomName}
-                        value={''}
+                        value={roomName}
                         fullWidth
                     />
                 </DialogContent>
