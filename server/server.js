@@ -11,15 +11,15 @@ app.use(cors())
 // USERS ARRAY
 const users = []
 
-const addUser = (id, name, room) => {
+const addUser = (id, name) => {
     const existingUser = users.find(user => user.name.trim().toLowerCase() === name.trim().toLowerCase())
 
     if (existingUser) return { error: "Username has already been taken" }
-    if (!name && !room) return { error: "Username and room are required" }
+    // if (!name && !room) return { error: "Username and room are required" }
     if (!name) return { error: "Username is required" }
-    if (!room) return { error: "Room is required" }
+    // if (!room) return { error: "Room is required" }
 
-    const user = { id, name, room }
+    const user = { id, name }
     users.push(user)
     return { user }
 }
@@ -35,8 +35,8 @@ const deleteUser = (id) => {
 }
 
 const getUser = id => {
-    let user = users.find(user => user.id === id)
-    return user
+  let user = users.find(user => user.id === id)
+  return user
 }
 
 const getUsers = (room) => users.filter(user => user.room === room)
@@ -44,14 +44,26 @@ const getUsers = (room) => users.filter(user => user.room === room)
 
 // SERVER CONNECTION
 io.on("connection", socket => {
-  socket.on('login', ({ name, room }, callback) => {
-    const { user, error } = addUser(socket.id, name, room)
-    if (error) return callback(error)
-    socket.join(user.room)
-    socket.in(room).emit('notification', { title: 'Someone\'s here', description: `${user.name} just entered the room` })
-    io.in(room).emit('users', getUsers(room))
-    callback()
+  
+  // socket.on("set-name", (data) => {
+  //         users[socket.id] = { name: data };
+  //         console.log(users);
+  // });
+  
+  socket.on('login', (name) => {
+    addUser(socket.id, name)
+    console.log(users)
 })
+
+//   socket.on('login', ({ name, room }, callback) => {
+//     const { user, error } = addUser(socket.id, name, room)
+//     if (error) return callback(error)
+//     socket.join(user.room)
+//     socket.in(room).emit('notification', { title: 'Someone\'s here', description: `${user.name} just entered the room` })
+//     io.in(room).emit('users', getUsers(room))
+//     callback()
+//     // console.log(name)
+// })
 
   socket.on('sendMessage', message => {
     const user = getUser(socket.id)
@@ -66,10 +78,6 @@ io.on("connection", socket => {
         io.in(user.room).emit('users', getUsers(user.room))
     }
 
-    // socket.on("set-name", (data) => {
-    //         userInfo[socket.id] = { name: data };
-    //         console.log(userInfo);
-    //       });
 })
 
 })

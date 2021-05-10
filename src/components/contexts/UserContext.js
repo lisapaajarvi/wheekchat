@@ -44,7 +44,7 @@ export function UserProvider({ children }) {
 
     const saveUser = (name) => {
         setUser(name)
-        // socket.emit('set-name', username);
+        socket.emit('login', name);
     }
 
     // const joinRoom = (roomName) => {
