@@ -19,7 +19,7 @@ const addUser = (id, name) => {
     if (!name) return { error: "Username is required" }
     // if (!room) return { error: "Room is required" }
 
-    const user = { id, name }
+    const user = { id, name, room: '' }
     users.push(user)
     return { user }
 }
