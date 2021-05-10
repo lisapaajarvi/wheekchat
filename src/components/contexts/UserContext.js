@@ -27,14 +27,14 @@ export function UserProvider({ children }) {
         });
 
         socket.on("rooms", incomingUsers => {
-            setUsers(incomingUsers);
+            setUsers([incomingUsers]);
             //BRÅKIG ARRAY. PLEASE WORK
             // console.log(incomingUsers);
-            // console.log(users);
+            console.log(users);
         })        
 
         socket.on("message", msg => {
-            setMessages(messages => [...messages, msg]);
+            setMessages([...messages, msg]);
             console.log(messages)
         })
         
@@ -44,8 +44,6 @@ export function UserProvider({ children }) {
             //     setMessages(messageList)
             //     console.log(messages);
             // }
-
-            // socket.on('sendMessage', message);
             
             // // socket.on('join-room', incomingMessage);
             // // socket.on('etc..', incomingMessage);
@@ -74,7 +72,6 @@ export function UserProvider({ children }) {
             // rooms,
             messages,
             users,
-            setUser,
             saveUser,
             joinRoom,
             sendMessage

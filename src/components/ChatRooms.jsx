@@ -31,9 +31,6 @@ function ChatRooms() {
     const handleRoomName = (e) => {
         setRoomName(e.target.value)
     }
-    
-    console.log(user)
-    // console.log(roomName)
 
     return (
         <div className="roomStyle">
