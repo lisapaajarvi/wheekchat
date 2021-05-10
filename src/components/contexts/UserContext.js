@@ -10,10 +10,10 @@ export function UserProvider({ children }) {
     const ENDPOINT = 'http://127.0.0.1:4000/';
     const [socket] = useState(io(ENDPOINT, { transports: ['websocket', 'polling'] }));
     const [user, setUser] = useState();
-    const [users, setUsers] = useState([])
+    //const [users, setUsers] = useState([])
     const [messages, setMessages] = useState([]);
     // const [room, setRoom] = useState();
-    // const [rooms, setRooms] = useState([]);
+    const [rooms, setRooms] = useState([]);
 
     useEffect(() => {
         // const saveIncomingUsers = (incomingUsers) => {
@@ -24,13 +24,14 @@ export function UserProvider({ children }) {
 
         socket.on('connect', () => {
             console.log(`I'm connected with the back-end`);
+            socket.emit("getRooms", {})
         });
 
-        socket.on("rooms", incomingUsers => {
-            setUsers([incomingUsers]);
+        socket.on("rooms", activeRooms => {
+            setRooms(activeRooms);
             //BRÅKIG ARRAY. PLEASE WORK
             // console.log(incomingUsers);
-            console.log(users);
+            //console.log(users);
         })        
 
         socket.on("message", msg => {
@@ -47,7 +48,7 @@ export function UserProvider({ children }) {
             
             // // socket.on('join-room', incomingMessage);
             // // socket.on('etc..', incomingMessage);
-        }, [messages, users, socket])       
+        }, [messages, socket])       
 
     const sendMessage = (message) => {
         socket.emit('sendMessage', message)
@@ -69,9 +70,9 @@ export function UserProvider({ children }) {
         <UserContext.Provider value={{
             // room,
             user,
-            // rooms,
+            rooms,
             messages,
-            users,
+            //users,
             saveUser,
             joinRoom,
             sendMessage

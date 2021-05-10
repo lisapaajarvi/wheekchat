@@ -10,7 +10,7 @@ import '../css/chatrooms.css';
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { user, joinRoom } = useContext(UserContext);
+    const { rooms, user, joinRoom } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
     const [roomName, setRoomName] = React.useState('');
@@ -39,13 +39,13 @@ function ChatRooms() {
             </div>
             <p>Welcome {user}</p>
             <ul>
-                 {/* <Typography variant="h6">
-                    {users.map((room, index) => (                       
+                 <Typography variant="h6">
+                    {rooms.map((room, index) => (                       
                         <li key={index}>
-                            {room.name}
+                            {room}
                         </li>
                     ))}
-                </Typography>  */}
+                </Typography>  
             </ul>
 
             <Divider />

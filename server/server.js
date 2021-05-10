@@ -8,6 +8,10 @@ const io = socket(server, {pingTimeout: 120000});
 
 app.use(cors())
 
+// ROOMS ARRAY
+
+const rooms = [];
+
 // USERS ARRAY
 const users = []
 
@@ -22,15 +26,54 @@ const addUser = (id, name) => {
     return { user }
 }
 
-const addRoom = (room, id) => {
-    // const existingUser = users.find(user => user.name.trim().toLowerCase() === name.trim().toLowerCase())
-    // const user = { id, name, room: {room} }
-    let user = users.find(user => user.id === id)
-    user.room = room
-    console.log(users)
+const addRoom = (room, socket) => {
+    let currentUser = users.find((user) => user.id === socket.id)
+     if (currentUser === undefined ) {
+      console.log("current user is undefined")
+      return
+    }
+    else
+    {
+      console.log("current user " + currentUser.name)
+    }
+    
+    if(currentUser.room) {
+      console.log("current user " + currentUser + " is in room " + currentUser.room)
+      socket.leave(currentUser.room)
+      const oldRoom = currentUser.room
+      console.log("old room " + oldRoom)
+      currentUser.room = room;
+      const oldRoomUser = users.find((user) => user.room === oldRoom);
+      
+      if (!oldRoomUser) {
+        console.log("room is unused deleting")
+        deleteRoom(oldRoom);
+      }
+      else {
+        console.log("room in use " + oldRoomUser.room + "by" + oldRoomUser )
+      }
+    }
+    else
+    {
+      currentUser.room = room;
+    }
 
-    // users.push(...user)
-    // return { user }
+    let joinedRoom = rooms.includes(room);
+    if(!joinedRoom) {
+      rooms.push(room)
+    }
+    socket.emit("rooms", rooms)
+    console.log("rooms" + rooms)
+}
+
+const deleteRoom = (oldRoom) => {
+  let index = rooms.indexOf(oldRoom);
+  if (index===-1) {
+    console.log("rummet finns inte")
+  }
+  else {
+    rooms.splice(index, 1);
+  } 
 }
 
 const deleteUser = (id) => {
@@ -46,6 +89,9 @@ const getUser = id => {
 const getUsers = (room) => users.filter(user => user.room === room)
 
 
+
+
+
 // SERVER CONNECTION
 io.on("connection", socket => {
   
@@ -57,11 +103,14 @@ io.on("connection", socket => {
     socket.on('join-room', (room) => {
       // lämna rum socket.leave
       socket.join(room);
-      addRoom(room, socket.id)
+      addRoom(room, socket)
       console.log("joined room: ", room)
-      console.log(users)
-      socket.emit("rooms", users);
+      socket.emit("rooms", rooms);
     });
+
+    socket.on("getRooms", ()=> {
+      socket.emit("rooms", rooms);
+    })
 
 //   socket.on('login', ({ name, room }, callback) => {
 //     const { user, error } = addUser(socket.id, name, room)
