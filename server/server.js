@@ -63,8 +63,9 @@ io.on("connection", socket => {
       // lämna rum socket.leave
       socket.join(room);
       addRoom(room, socket.id)
-      // socket.emit("rooms", rooms);
       console.log("joined room: ", room)
+      console.log(users)
+      socket.emit("rooms", users);
     });
 
 //   socket.on('login', ({ name, room }, callback) => {
@@ -80,6 +81,7 @@ io.on("connection", socket => {
   socket.on('sendMessage', message => {
     const user = getUser(socket.id)
     io.in(user.room).emit('message', { user: user.name, text: message });
+    console.log(message)
 })
 
   socket.on("disconnect", () => {

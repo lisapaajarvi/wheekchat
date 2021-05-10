@@ -40,22 +40,15 @@ function ChatRooms() {
             <div className="titleBox">
                 <Typography variant="h5" style={{textDecoration: 'underline'}}>CHAT ROOMS</Typography>
             </div>
-            <p>Welcome</p>
+            <p>Welcome {user}</p>
             <ul>
-                {/* <Typography variant="h6">
-                    {rooms.map((chatroom, index) => (                       
+                 {/* <Typography variant="h6">
+                    {users.map((room, index) => (                       
                         <li key={index}>
-                            {chatroom.name}
-                            {chatroom.users.map((user, index) => (
-                            <ul>
-                                <li key={index}>
-                                    {user.name}
-                                </li>
-                            </ul>
-                            ))} 
+                            {room.name}
                         </li>
                     ))}
-                </Typography> */}
+                </Typography>  */}
             </ul>
 
             <Divider />

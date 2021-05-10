@@ -10,37 +10,50 @@ export function UserProvider({ children }) {
     const ENDPOINT = 'http://127.0.0.1:4000/';
     const [socket] = useState(io(ENDPOINT, { transports: ['websocket', 'polling'] }));
     const [user, setUser] = useState();
-    // const [users, setUsers] = useState([])
+    const [users, setUsers] = useState([])
+    const [messages, setMessages] = useState([]);
     // const [room, setRoom] = useState();
-    // const [messages, setMessages] = useState([]);
     // const [rooms, setRooms] = useState([]);
 
     useEffect(() => {
+        // const saveIncomingUsers = (incomingUsers) => {
+        //     setUsers(incomingUsers)
+        //     console.log(incomingUsers);
+        //     console.log(users);
+        // }
+
         socket.on('connect', () => {
             console.log(`I'm connected with the back-end`);
         });
-        // const incomingMessage = (message) => {
-        //     let messageList = [...messages];
-        //     messageList.push(message);
-        //     setMessages(messageList)
-        //     console.log(messages);
-        // }
-        // socket.on('message', incomingMessage);
+
+        socket.on("rooms", incomingUsers => {
+            setUsers(incomingUsers);
+            //BRÅKIG ARRAY. PLEASE WORK
+            // console.log(incomingUsers);
+            // console.log(users);
+        })        
+
+        socket.on("message", msg => {
+            setMessages(messages => [...messages, msg]);
+            console.log(messages)
+        })
         
-        // socket.on('rooms', incomingRooms);
-        // // socket.on('join-room', incomingMessage);
-        // // socket.on('etc..', incomingMessage);
-    }, [socket])
+        // const incomingMessage = (message) => {
+            //     let messageList = [...messages];
+            //     messageList.push(message);
+            //     setMessages(messageList)
+            //     console.log(messages);
+            // }
 
+            // socket.on('sendMessage', message);
+            
+            // // socket.on('join-room', incomingMessage);
+            // // socket.on('etc..', incomingMessage);
+        }, [messages, users, socket])       
 
-    // const incomingRooms = (chatrooms) => {
-    //     setRooms(chatrooms)
-    //     console.log(chatrooms);
-    // }
-
-    // const sendMessage = (message) => {
-    //     socket.send(user + ": " + message)
-    // }
+    const sendMessage = (message) => {
+        socket.emit('sendMessage', message)
+    }
 
     const saveUser = (name) => {
         setUser(name)
@@ -59,11 +72,12 @@ export function UserProvider({ children }) {
             // room,
             user,
             // rooms,
-            // messages,
+            messages,
+            users,
             setUser,
             saveUser,
             joinRoom,
-            // sendMessage
+            sendMessage
         }}>
             {children}
         </UserContext.Provider>

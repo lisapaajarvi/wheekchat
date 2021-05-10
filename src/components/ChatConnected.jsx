@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { Typography, TextField, Button } from '@material-ui/core';
 import '../css/chatconnected.css';
-// import UserContext from './contexts/UserContext';
+import UserContext from './contexts/UserContext';
 
 function ChatConnected() {
-    // const [message, setMessage] = useState('')
-    // const { user, room, messages, sendMessage } = useContext(UserContext)
+    const [message, setMessage] = useState('')
+
+    const { messages, sendMessage } = useContext(UserContext)
 
     const handleClick = () => {
-        // sendMessage(message)
-        // setMessage('')
+        sendMessage(message)
+        setMessage('')
     }
 
     const handleMessageChange = (e) => {
-        // setMessage(e.target.value)
+        setMessage(e.target.value)
     }
 
     return (
@@ -23,14 +24,14 @@ function ChatConnected() {
             </div>
             <div className="chatBox">
                 <Typography>CHAT TEXT GOES HERE</Typography>
-                {/* <ul>
-                    {messages.map((chatMessage, index) => (
+                 <ul>
+                    {messages.map((msg, index) => (
                  
                         <li key={index}>
-                            {chatMessage}
+                            {msg.user + ':' + msg.text}
                         </li>
                     ))}
-                </ul> */}
+                </ul>
             </div>
             <div className="somebodyTypingBox">
                 <Typography>Somebody is typing...</Typography>
@@ -39,7 +40,7 @@ function ChatConnected() {
                 <TextField 
                     id="sendtext" 
                     label="Enter text" 
-                    value={''} 
+                    value={message} 
                     onChange={handleMessageChange}
                     variant="outlined" 
                     size="small" />
