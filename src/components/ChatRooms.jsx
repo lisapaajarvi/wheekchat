@@ -41,7 +41,7 @@ function ChatRooms() {
             <ul>
                  <Typography variant="h6">
                     {rooms.map((room, index) => (                       
-                        <li key={index}>
+                        <li key={index} onClick={() => joinRoom(room)}>
                             {room}
                         </li>
                     ))}

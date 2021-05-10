@@ -38,7 +38,7 @@ const addRoom = (room, socket) => {
     }
     
     if(currentUser.room) {
-      console.log("current user " + currentUser + " is in room " + currentUser.room)
+      console.log("current user " + currentUser.name + " is in room " + currentUser.room)
       socket.leave(currentUser.room)
       const oldRoom = currentUser.room
       console.log("old room " + oldRoom)
@@ -50,7 +50,7 @@ const addRoom = (room, socket) => {
         deleteRoom(oldRoom);
       }
       else {
-        console.log("room in use " + oldRoomUser.room + "by" + oldRoomUser )
+        console.log("room in use " + oldRoomUser.room + " by " + oldRoomUser.name )
       }
     }
     else
