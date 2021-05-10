@@ -1,37 +1,36 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { Typography, TextField, Button } from '@material-ui/core';
 import '../css/chatconnected.css';
-import UserContext from './contexts/UserContext';
+// import UserContext from './contexts/UserContext';
 
 function ChatConnected() {
-    const [message, setMessage] = useState('')
-    const { user, room, messages, sendMessage } = useContext(UserContext)
+    // const [message, setMessage] = useState('')
+    // const { user, room, messages, sendMessage } = useContext(UserContext)
 
-    console.log("Nu tänker jag göra en html tabell med " + messages.length + "mess")
     const handleClick = () => {
-        sendMessage(message)
-        setMessage('')
+        // sendMessage(message)
+        // setMessage('')
     }
 
     const handleMessageChange = (e) => {
-        setMessage(e.target.value)
+        // setMessage(e.target.value)
     }
 
     return (
         <div className="connectedStyle">
             <div className="titleBox">
-                <Typography variant="h5" style={{textDecoration: 'underline'}}>{user} @ {room}</Typography>
+                <Typography variant="h5" style={{textDecoration: 'underline'}}>{''} @ {''}</Typography>
             </div>
             <div className="chatBox">
                 <Typography>CHAT TEXT GOES HERE</Typography>
-                <ul>
+                {/* <ul>
                     {messages.map((chatMessage, index) => (
                  
                         <li key={index}>
                             {chatMessage}
                         </li>
                     ))}
-                </ul>
+                </ul> */}
             </div>
             <div className="somebodyTypingBox">
                 <Typography>Somebody is typing...</Typography>
@@ -40,7 +39,7 @@ function ChatConnected() {
                 <TextField 
                     id="sendtext" 
                     label="Enter text" 
-                    value={message} 
+                    value={''} 
                     onChange={handleMessageChange}
                     variant="outlined" 
                     size="small" />

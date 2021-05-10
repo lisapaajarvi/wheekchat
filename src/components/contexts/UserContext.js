@@ -7,13 +7,13 @@ export const UserConsumer = UserContext.Consumer
 
 
 export function UserProvider({ children }) {
+    const ENDPOINT = 'http://127.0.0.1:4000/';
+    const [socket] = useState(io(ENDPOINT, { transports: ['websocket', 'polling'] }));
     const [user, setUser] = useState();
+    // const [users, setUsers] = useState([])
     const [room, setRoom] = useState();
-    const [socket] = useState(io());
     const [messages, setMessages] = useState([]);
     const [rooms, setRooms] = useState([]);
-    
-
 
     useEffect(() => {
         const incomingMessage = (message) => {

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Typography, Divider, Button, TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
@@ -7,16 +7,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import LockIcon from '@material-ui/icons/Lock';
 import '../css/chatrooms.css';
-import UserContext from './contexts/UserContext'
+// import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { rooms, user, joinRoom } = useContext(UserContext);
-    console.log(user)
-    console.log(rooms)
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
-
-    const [roomName, setRoomName] = React.useState('');
 
     const handleCreateRoomClose = () => {
         setOpenCreateRoom(false);
@@ -27,12 +22,12 @@ function ChatRooms() {
     }
 
     function onCreateRoomClick() {
-        joinRoom(roomName);
+        // joinRoom(roomName);
         setOpenCreateRoom(false);
-        setRoomName('');
+        // setRoomName('');
     }
     const handleRoomName = (e) => {
-         setRoomName(e.target.value)
+        //  setRoomName(e.target.value)
     }
 
     return (
@@ -40,9 +35,9 @@ function ChatRooms() {
             <div className="titleBox">
                 <Typography variant="h5" style={{textDecoration: 'underline'}}>CHAT ROOMS</Typography>
             </div>
-            <p>Welcome {user}</p>
+            <p>Welcome</p>
             <ul>
-                <Typography variant="h6">
+                {/* <Typography variant="h6">
                     {rooms.map((chatroom, index) => (                       
                         <li key={index}>
                             {chatroom.name}
@@ -55,7 +50,7 @@ function ChatRooms() {
                             ))} 
                         </li>
                     ))}
-                </Typography>
+                </Typography> */}
             </ul>
 
             <Divider />
@@ -90,7 +85,7 @@ function ChatRooms() {
                         label="Room name"
                         type="text"
                         onChange={handleRoomName}
-                        value={roomName}
+                        value={''}
                         fullWidth
                     />
                 </DialogContent>
