@@ -52,6 +52,7 @@ export function UserProvider({ children }) {
 
     const joinRoom = (roomName) => {
         setRoom(roomName);
+        setMessages([]);
         socket.emit('join-room', roomName);
     }
 

@@ -12,8 +12,4 @@ function MainPage() {
     )    
 }
 
-// const mainStyle = {
-//     display: 'flex'
-// }
-
 export default MainPage;
