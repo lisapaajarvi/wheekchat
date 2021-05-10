@@ -6,7 +6,7 @@ import UserContext from './contexts/UserContext';
 function ChatConnected() {
     const [message, setMessage] = useState('')
 
-    const { messages, sendMessage } = useContext(UserContext)
+    const { messages, sendMessage, user, room } = useContext(UserContext)
 
     const handleClick = () => {
         sendMessage(message)
@@ -18,9 +18,12 @@ function ChatConnected() {
     }
 
     return (
+
         <div className="connectedStyle">
-            <div className="titleBox">
-                <Typography variant="h5" style={{textDecoration: 'underline'}}>{''} @ {''}</Typography>
+            {room? (
+                <>
+                <div className="titleBox">
+                <Typography variant="h5" style={{textDecoration: 'underline'}}>{user} @ {room}</Typography>
             </div>
             <div className="chatBox">
                 <Typography>CHAT TEXT GOES HERE</Typography>
@@ -52,6 +55,14 @@ function ChatConnected() {
                     SEND
                 </Button>
             </div>
+            </>
+            ):(
+                <>
+                <p>Welcome {user}!</p>
+                <p>Please create a new room or click on a room to join.</p>
+                </>
+            )} 
+            
         </div>
     )    
 }
