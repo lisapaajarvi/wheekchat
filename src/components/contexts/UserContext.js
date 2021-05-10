@@ -33,13 +33,9 @@ export function UserProvider({ children }) {
 
         socket.on("message", msg => {
             setMessages([...messages, msg]);
-            console.log(messages)
         })
 
-            
-            // // socket.on('join-room', incomingMessage);
-            // // socket.on('etc..', incomingMessage);
-        }, [messages, socket])       
+        }, [messages, rooms, socket])       
 
     const sendMessage = (message) => {
         socket.emit('sendMessage', message)
