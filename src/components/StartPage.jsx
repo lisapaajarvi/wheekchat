@@ -3,11 +3,11 @@ import { Container, Button, TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import logo from '../assets/logo.png';
 import '../css/startpage.css';
-// import UserContext from './contexts/UserContext'
+import UserContext from './contexts/UserContext'
 
 function StartPage() {
     const [name, setName] = React.useState('');
-    // const { saveUser } = useContext(UserContext);
+    const { saveUser } = useContext(UserContext);
     
     const handleOnClick = () => {
         // saveUser(name)

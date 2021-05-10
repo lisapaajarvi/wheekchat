@@ -65,6 +65,11 @@ io.on("connection", socket => {
         io.in(user.room).emit('notification', { title: 'Someone just left', description: `${user.name} just left the room` })
         io.in(user.room).emit('users', getUsers(user.room))
     }
+
+    socket.on("set-name", (data) => {
+            userInfo[socket.id] = { name: data };
+            console.log(userInfo);
+          });
 })
 
 })
