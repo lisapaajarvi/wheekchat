@@ -12,7 +12,7 @@ export function UserProvider({ children }) {
     const [user, setUser] = useState();
     //const [users, setUsers] = useState([])
     const [messages, setMessages] = useState([]);
-    // const [room, setRoom] = useState();
+    const [room, setRoom] = useState();
     const [rooms, setRooms] = useState([]);
 
     useEffect(() => {
@@ -29,22 +29,13 @@ export function UserProvider({ children }) {
 
         socket.on("rooms", activeRooms => {
             setRooms(activeRooms);
-            //BRÅKIG ARRAY. PLEASE WORK
-            // console.log(incomingUsers);
-            //console.log(users);
         })        
 
         socket.on("message", msg => {
             setMessages([...messages, msg]);
             console.log(messages)
         })
-        
-        // const incomingMessage = (message) => {
-            //     let messageList = [...messages];
-            //     messageList.push(message);
-            //     setMessages(messageList)
-            //     console.log(messages);
-            // }
+
             
             // // socket.on('join-room', incomingMessage);
             // // socket.on('etc..', incomingMessage);
@@ -60,15 +51,14 @@ export function UserProvider({ children }) {
     }
 
     const joinRoom = (roomName) => {
-        // setRoom(roomName);
+        setRoom(roomName);
         socket.emit('join-room', roomName);
-        console.log(roomName)
     }
 
 
     return (
         <UserContext.Provider value={{
-            // room,
+            room,
             user,
             rooms,
             messages,
