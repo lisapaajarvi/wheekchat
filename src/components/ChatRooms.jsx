@@ -10,7 +10,7 @@ import '../css/chatrooms.css';
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { rooms, user, joinRoom, createLockedRoom } = useContext(UserContext);
+    const { user, joinRoom, createLockedRoom, openRooms, closedRooms } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
     const [openCreateLockedRoom, setOpenCreateLockedRoom] = React.useState(false);    
@@ -54,6 +54,8 @@ function ChatRooms() {
         setPassword(e.target.value)
     }
 
+    //const lockedRooms = rooms.filter(room => room.isLocked === true);
+
     return (
         <div className="roomStyle">
             <div className="titleBox">
@@ -62,10 +64,11 @@ function ChatRooms() {
             <p>Welcome {user}</p>
             <ul>
                  <Typography variant="h6">
-                    {rooms.map((room, index) => (                       
+                    {openRooms.map((room, index) => (                      
                         <li key={index} onClick={() => joinRoom(room)}>
                             {room.name}
                         </li>
+                        
                     ))}
                 </Typography>  
             </ul>
@@ -74,10 +77,14 @@ function ChatRooms() {
 
             <ul>
                 <Typography variant="h6">
-                    <li>ROOM {4}<LockIcon style={{marginLeft: '0.5rem'}}/></li>
-                    <li>ROOM {5}<LockIcon style={{marginLeft: '0.5rem'}}/></li>
-                    <li>ROOM {6}<LockIcon style={{marginLeft: '0.5rem'}}/></li>
-                </Typography>
+                    {closedRooms.map((room, index) => (                       
+                        <li key={index} onClick={() => joinRoom(room)}>
+                            {room.name} 
+                            <LockIcon style={{marginLeft: '0.5rem'}}/>
+                        </li>
+                    ))}
+                </Typography>  
+
             </ul>
 
             <Divider />

@@ -15,7 +15,11 @@ const rooms = [
     name: 'chatt',
     isLocked: true,
     password: 'hej'
-  }
+  },
+  {
+    name: 'chatt2',
+    isLocked: false
+  },
 ];
 
 // USERS ARRAY
