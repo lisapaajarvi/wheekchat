@@ -32,22 +32,11 @@ const addUser = (id, name) => {
     return { user }
 }
 
-const addRoom = (room, socket) => {
+const addRoom = (room, socket, password) => {
     let currentUser = users.find((user) => user.id === socket.id)
-     if (currentUser === undefined ) {
-      console.log("current user is undefined")
-      return
-    }
-    else
-    {
-      console.log("current user " + currentUser.name)
-    }
-    
     if(currentUser.room) {
-      console.log("current user " + currentUser.name + " is in room " + currentUser.room)
       socket.leave(currentUser.room)
       const oldRoom = currentUser.room
-      console.log("old room " + oldRoom)
       currentUser.room = room;
       const oldRoomUser = users.find((user) => user.room === oldRoom);
       
@@ -66,10 +55,15 @@ const addRoom = (room, socket) => {
 
     let joinedRoom = rooms.includes(room);
     if(!joinedRoom) {
-      rooms.push({name: room, isLocked: false})
+      if(password) {
+        rooms.push({name: room, isLocked: true, password: password})
+      }
+      else {
+        rooms.push({name: room, isLocked: false})
+      }
     }
     socket.emit("rooms", rooms)
-    console.log("rooms" + rooms)
+    console.log("rooms" + rooms[1].name + rooms[1].password)
 }
 
 const deleteRoom = (oldRoom) => {
@@ -120,7 +114,7 @@ io.on("connection", socket => {
 
     socket.on('create-locked-room', (room, password) => {
       socket.join(room);
-      addRoom(room, socket)
+      addRoom(room, socket, password)
       console.log("joined room: ", room)
       socket.emit("rooms", rooms);
     });

@@ -10,7 +10,7 @@ import '../css/chatrooms.css';
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { rooms, user, joinRoom } = useContext(UserContext);
+    const { rooms, user, joinRoom, createLockedRoom } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
     const [openCreateLockedRoom, setOpenCreateLockedRoom] = React.useState(false);    
@@ -40,7 +40,7 @@ function ChatRooms() {
     }
 
     function onCreateLockedRoomClick() {
-        // createLockedRoom(roomName, password);
+        createLockedRoom(roomName, password);
         setOpenCreateLockedRoom(false);
         setRoomName('');
         setPassword('');
