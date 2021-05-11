@@ -96,7 +96,6 @@ io.on("connection", socket => {
   
   socket.on('login', (name) => {
     addUser(socket.id, name)
-    // console.log(users)
   })
 
     socket.on('join-room', (room) => {
@@ -116,16 +115,6 @@ io.on("connection", socket => {
       console.log("joined room: ", room)
       socket.emit("rooms", rooms);
     });
-
-//   socket.on('login', ({ name, room }, callback) => {
-//     const { user, error } = addUser(socket.id, name, room)
-//     if (error) return callback(error)
-//     socket.join(user.room)
-//     socket.in(room).emit('notification', { title: 'Someone\'s here', description: `${user.name} just entered the room` })
-//     io.in(room).emit('users', getUsers(room))
-//     callback()
-//     // console.log(name)
-// })
 
   socket.on('sendMessage', message => {
     const user = getUser(socket.id)

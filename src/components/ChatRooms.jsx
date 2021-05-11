@@ -54,8 +54,6 @@ function ChatRooms() {
         setPassword(e.target.value)
     }
 
-    //const lockedRooms = rooms.filter(room => room.isLocked === true);
-
     return (
         <div className="roomStyle">
             <div className="titleBox">
