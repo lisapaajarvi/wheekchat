@@ -52,6 +52,18 @@ export function UserProvider({ children }) {
         socket.emit('join-room', roomName);
     }
 
+    const createLockedRoom = (roomName, password) => {
+        setRoom(roomName);
+        setMessages([]);
+        socket.emit('create-locked-room', roomName, password);
+    }
+
+    const joinLockedRoom = (roomName, password) => {
+        //setRoom(roomName);
+        //setMessages([]);
+        socket.emit('join-locked-room', roomName, password);
+    }
+
 
     return (
         <UserContext.Provider value={{
@@ -62,6 +74,8 @@ export function UserProvider({ children }) {
             //users,
             saveUser,
             joinRoom,
+            createLockedRoom,
+            joinLockedRoom,
             sendMessage
         }}>
             {children}

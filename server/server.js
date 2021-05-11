@@ -10,7 +10,13 @@ app.use(cors())
 
 // ROOMS ARRAY
 
-const rooms = [];
+const rooms = [
+  {
+    name: 'chatt',
+    isLocked: true,
+    password: 'hej'
+  }
+];
 
 // USERS ARRAY
 const users = []
@@ -60,7 +66,7 @@ const addRoom = (room, socket) => {
 
     let joinedRoom = rooms.includes(room);
     if(!joinedRoom) {
-      rooms.push(room)
+      rooms.push({name: room, isLocked: false})
     }
     socket.emit("rooms", rooms)
     console.log("rooms" + rooms)
@@ -98,7 +104,7 @@ io.on("connection", socket => {
   socket.on('login', (name) => {
     addUser(socket.id, name)
     // console.log(users)
-})
+  })
 
     socket.on('join-room', (room) => {
       // lämna rum socket.leave
@@ -111,6 +117,13 @@ io.on("connection", socket => {
     socket.on("getRooms", ()=> {
       socket.emit("rooms", rooms);
     })
+
+    socket.on('create-locked-room', (room, password) => {
+      socket.join(room);
+      addRoom(room, socket)
+      console.log("joined room: ", room)
+      socket.emit("rooms", rooms);
+    });
 
 //   socket.on('login', ({ name, room }, callback) => {
 //     const { user, error } = addUser(socket.id, name, room)
