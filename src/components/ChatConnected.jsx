@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Typography, TextField, Button } from '@material-ui/core';
 import '../css/chatconnected.css';
 import UserContext from './contexts/UserContext';
+import logo from '../assets/logo.png'
 
 function ChatConnected() {
     const [message, setMessage] = useState('')
@@ -22,22 +23,18 @@ function ChatConnected() {
         <div className="connectedStyle">
             {room? (
                 <>
-                <div className="titleBox">
-                <Typography variant="h5" style={{textDecoration: 'underline'}}>{user} @ {room}</Typography>
+                <div className="titleBoxChat">
+                <Typography variant="h5" >{user} @ {room}</Typography>
             </div>
             <div className="chatBox">
-                <Typography>CHAT TEXT GOES HERE</Typography>
-                 <ul>
+                 <ul className="ulStyle">
                     {messages.map((msg, index) => (
                  
-                        <li key={index}>
-                            {msg.user + ':' + msg.text}
+                        <li className="textBox" key={index}>
+                            {msg.user + ': ' +  msg.text}
                         </li>
                     ))}
                 </ul>
-            </div>
-            <div className="somebodyTypingBox">
-                <Typography>Somebody is typing...</Typography>
             </div>
             <div className="sendNewTextBox">
                 <TextField 
@@ -49,7 +46,7 @@ function ChatConnected() {
                     size="small" />
                 <Button
                     variant="contained"
-                    style={{ marginLeft: '1rem', background: 'black', color: 'white' }}
+                    style={{ marginLeft: '1rem', background: '#302F4A', color: 'white' }}
                     onClick={handleClick}
                 >
                     SEND
@@ -58,11 +55,11 @@ function ChatConnected() {
             </>
             ):(
                 <>
-                <p>Welcome {user}!</p>
+                <img className="logo" style={{width: 180, marginTop: 30 }} src={logo} alt="Logo" />
+                <h2>Welcome {user}!</h2>
                 <p>Please create a new room or click on a room to join.</p>
                 </>
-            )} 
-            
+            )}             
         </div>
     )    
 }

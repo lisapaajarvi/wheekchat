@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import LockIcon from '@material-ui/icons/Lock';
 import '../css/chatrooms.css';
+import logo from '../assets/logo_text2.png'
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
@@ -35,10 +36,9 @@ function ChatRooms() {
     return (
         <div className="roomStyle">
             <div className="titleBox">
-                <Typography variant="h5" style={{textDecoration: 'underline'}}>CHAT ROOMS</Typography>
+                <img className="logoRooms" style={{width: 180, marginTop: 30 }} src={logo} alt="Logo" />
             </div>
-            <p>Welcome {user}</p>
-            <ul>
+            <ul className="roomLink">
                  <Typography variant="h6">
                     {rooms.map((room, index) => (                       
                         <li key={index} onClick={() => joinRoom(room)}>
@@ -48,7 +48,7 @@ function ChatRooms() {
                 </Typography>  
             </ul>
 
-            <Divider />
+            <Divider style={{background: '#9DA1C2'}} />
 
             <ul>
                 <Typography variant="h6">
@@ -61,11 +61,11 @@ function ChatRooms() {
             <Divider />
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" onClick={openCreateRoomModal} size="small" style={{margin: '2rem 0 1rem 0', background: 'black', color: 'white'}}>CREATE ROOM</Button>
+                <Button variant="contained" onClick={openCreateRoomModal} size="small" style={{margin: '2rem 0 1rem 0', background: 'white', color: '#302F4A'}}>CREATE ROOM</Button>
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Link to="/" style={{textDecoration: 'none'}}>
-                    <Button variant="contained" size="small" style={{background: 'black', color: 'white', marginBottom: '2rem'}}>LOG OUT</Button>
+                    <Button variant="contained" size="small" style={{background: 'white', color: '#302F4A', marginBottom: '2rem'}}>LOG OUT</Button>
                 </Link>
             </div>
 
@@ -86,7 +86,7 @@ function ChatRooms() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCreateRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
-                    <Button onClick={onCreateRoomClick} variant="contained" color="primary" style={{background: 'black', color: 'white'}}>CREATE</Button>
+                    <Button onClick={onCreateRoomClick} variant="contained" color="primary" style={{background: '#302F4A', color: 'white'}}>CREATE</Button>
                 </DialogActions>
             </Dialog>
         </div>
