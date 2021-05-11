@@ -61,7 +61,7 @@ function ChatRooms() {
             <div className="titleBox">
                 <Typography variant="h5" style={{textDecoration: 'underline'}}>CHAT ROOMS</Typography>
             </div>
-            <p>Welcome {user}</p>
+            <p>Welcome {user} </p>
             <ul>
                  <Typography variant="h6">
                     {openRooms.map((room, index) => (                      
@@ -80,7 +80,7 @@ function ChatRooms() {
                     {closedRooms.map((room, index) => (                       
                         <li key={index} onClick={() => joinRoom(room)}>
                             {room.name} 
-                            <LockIcon style={{marginLeft: '0.5rem'}}/>
+                            <LockIcon style={{marginLeft: '0.5rem'}}/> 
                         </li>
                     ))}
                 </Typography>  
