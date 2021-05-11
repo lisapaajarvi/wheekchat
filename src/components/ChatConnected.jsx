@@ -23,15 +23,15 @@ function ChatConnected() {
         <div className="connectedStyle">
             {room? (
                 <>
-                <div className="titleBox">
-                <Typography variant="h5" style={{textDecoration: 'underline'}}>{user} @ {room}</Typography>
+                <div className="titleBoxChat">
+                <Typography variant="h5" >{user} @ {room}</Typography>
             </div>
             <div className="chatBox">
-                 <ul>
+                 <ul className="ulStyle">
                     {messages.map((msg, index) => (
                  
-                        <li key={index}>
-                            {msg.user + ':' + msg.text}
+                        <li className="textBox" key={index}>
+                            {msg.user + ': ' +  msg.text}
                         </li>
                     ))}
                 </ul>
@@ -46,7 +46,7 @@ function ChatConnected() {
                     size="small" />
                 <Button
                     variant="contained"
-                    style={{ marginLeft: '1rem', background: 'black', color: 'white' }}
+                    style={{ marginLeft: '1rem', background: '#302F4A', color: 'white' }}
                     onClick={handleClick}
                 >
                     SEND
@@ -55,9 +55,9 @@ function ChatConnected() {
             </>
             ):(
                 <>
+                <img className="logo" style={{width: 180, marginTop: 30 }} src={logo} alt="Logo" />
                 <h2>Welcome {user}!</h2>
                 <p>Please create a new room or click on a room to join.</p>
-                <img className="logo" style={{width: 180, marginTop: 30 }} src={logo} alt="Logo" />
                 </>
             )}             
         </div>

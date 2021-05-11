@@ -17,14 +17,43 @@ p, h2 {
     align-items: center;
     margin: 2rem 0rem;
 }
+.titleBoxChat {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    margin: 2rem 0rem;
+    padding: 0rem 2rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    height: 4rem;
+    background: #302F4A;
+    color: #9DA1C2;
+}
 
 .chatBox {
     width: 80%;
     height: 80%;
-    background: #9CCC65;
     min-height: 12rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 10px;
+    background: white;
+    
+}
+
+.ulStyle {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    word-wrap: break-word
+}
+
+.textBox {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 2rem;
+    background: #57AF38;
+    color: white;   
 }
 
 .sendNewTextBox {

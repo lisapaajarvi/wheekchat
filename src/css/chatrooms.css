@@ -1,5 +1,6 @@
 .roomStyle {
-    background: #c7c7c7;
+    background: #302F4A;
+    color: #9DA1C2;
 }
 
 .titleBox {
@@ -7,6 +8,18 @@
     justify-content: center; 
     align-items: center;
     margin: 2rem 0rem;
+}
+
+.logoRooms {
+    -webkit-filter: invert(1);
+   filter: invert(1);
+}
+
+.roomLink {
+    cursor: pointer;
+}
+.roomLink:hover {
+    color: #E2E2E2;
 }
 
 @media (min-width: 1px) {
