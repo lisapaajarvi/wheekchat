@@ -27,7 +27,6 @@ function ChatConnected() {
                 <Typography variant="h5" style={{textDecoration: 'underline'}}>{user} @ {room}</Typography>
             </div>
             <div className="chatBox">
-                <Typography>CHAT TEXT GOES HERE</Typography>
                  <ul>
                     {messages.map((msg, index) => (
                  
@@ -36,9 +35,6 @@ function ChatConnected() {
                         </li>
                     ))}
                 </ul>
-            </div>
-            <div className="somebodyTypingBox">
-                <Typography>Somebody is typing...</Typography>
             </div>
             <div className="sendNewTextBox">
                 <TextField 

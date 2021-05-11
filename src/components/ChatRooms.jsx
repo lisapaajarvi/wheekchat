@@ -37,7 +37,6 @@ function ChatRooms() {
             <div className="titleBox">
                 <Typography variant="h5" style={{textDecoration: 'underline'}}>CHAT ROOMS</Typography>
             </div>
-            <p className="welcomeStyle">Welcome {user}</p>
             <ul>
                  <Typography variant="h6">
                     {rooms.map((room, index) => (                       

@@ -19,19 +19,12 @@ p, h2 {
 }
 
 .chatBox {
-    border: 1px solid black;
     width: 80%;
     height: 80%;
     background: #9CCC65;
     min-height: 12rem;
-}
-
-.somebodyTypingBox {
-    background: darkgray;
-    width: 80%;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
 }
 
 .sendNewTextBox {

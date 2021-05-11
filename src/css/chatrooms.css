@@ -9,12 +9,6 @@
     margin: 2rem 0rem;
 }
 
-.welcomeStyle {
-    margin-left: 1rem;
-    font-weight: bold;
-    overflow-x: hidden;
-}
-
 @media (min-width: 1px) {
     .roomStyle {
         width: 100%;
