@@ -61,7 +61,7 @@ function ChatConnected() {
                 <>
                 <h2>Welcome {user}!</h2>
                 <p>Please create a new room or click on a room to join.</p>
-                <img style={{width: 400, marginTop: 50 }} src={logo} alt="Logo" />;
+                <img className="logo" style={{width: 300, marginTop: 30 }} src={logo} alt="Logo" />
                 </>
             )}             
         </div>
