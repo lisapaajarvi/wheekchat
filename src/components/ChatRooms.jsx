@@ -10,7 +10,7 @@ import '../css/chatrooms.css';
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { user, joinRoom, createLockedRoom, openRooms, closedRooms } = useContext(UserContext);
+    const { user, joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
     const [openCreateLockedRoom, setOpenCreateLockedRoom] = React.useState(false);    
@@ -34,7 +34,7 @@ function ChatRooms() {
     }
     
     function onCreateRoomClick() {
-        joinRoom(roomName);
+        createOpenRoom(roomName);
         setOpenCreateRoom(false);
         setRoomName('');
     }
@@ -63,7 +63,7 @@ function ChatRooms() {
             <ul>
                  <Typography variant="h6">
                     {openRooms.map((room, index) => (                      
-                        <li key={index} onClick={() => joinRoom(room)}>
+                        <li key={index} onClick={() => joinOpenRoom(room)}>
                             {room.name}
                         </li>
                         
@@ -76,7 +76,7 @@ function ChatRooms() {
             <ul>
                 <Typography variant="h6">
                     {closedRooms.map((room, index) => (                       
-                        <li key={index} onClick={() => joinRoom(room)}>
+                        <li key={index} onClick={() => joinLockedRoom(room)}>
                             {room.name} 
                             <LockIcon style={{marginLeft: '0.5rem'}}/> 
                         </li>

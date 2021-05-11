@@ -36,16 +36,21 @@ const addUser = (id, name) => {
     return { user }
 }
 
-const addRoom = (room, socket, password) => {
+const addRoom = (room, socket) => {
+    console.log("room: " + room + "socket.id: " + socket.id)
     let currentUser = users.find((user) => user.id === socket.id)
+    console.log("this is the current user: " + currentUser.name)
     if(currentUser.room) {
+      console.log("this is the current user's old room: " + currentUser.room)
       socket.leave(currentUser.room)
+      console.log("left old room")
       const oldRoom = currentUser.room
-      currentUser.room = room;
+      currentUser.room = room.name;
       const oldRoomUser = users.find((user) => user.room === oldRoom);
       
       if (!oldRoomUser) {
         deleteRoom(oldRoom);
+        console.log("room " + oldRoom + " is empty and can be deleted")
       }
       else {
         console.log("room in use " + oldRoomUser.room + " by " + oldRoomUser.name )
@@ -53,16 +58,11 @@ const addRoom = (room, socket, password) => {
     }
     else
     {
-      currentUser.room = room;
+      currentUser.room = room.name;
     }
-    const joinedRoom = rooms.find( r => r.name === room);
+    const joinedRoom = rooms.find((r) => r.name === room.name);
     if(!joinedRoom) {
-      if(password) {
-        rooms.push({name: room, isLocked: true, password: password})
-      }
-      else {
-        rooms.push({name: room, isLocked: false})
-      }
+      rooms.push(room)
     }
     socket.emit("rooms", rooms)
 }
@@ -98,29 +98,22 @@ io.on("connection", socket => {
     addUser(socket.id, name)
   })
 
-    socket.on('join-room', (room) => {
-      socket.join(room);
-      addRoom(room, socket)
-      console.log("joined room: ", room)
-      socket.emit("rooms", rooms);
-    });
+  socket.on('join-room', (room) => {
+    socket.join(room);
+    addRoom(room, socket)
+    console.log("joined room: ", room)
+    socket.emit("rooms", rooms);
+  });
 
-    socket.on("getRooms", ()=> {
-      socket.emit("rooms", rooms);
-    })
-
-    socket.on('create-locked-room', (room, password) => {
-      socket.join(room);
-      addRoom(room, socket, password)
-      console.log("joined room: ", room)
-      socket.emit("rooms", rooms);
-    });
+  socket.on("getRooms", ()=> {
+    socket.emit("rooms", rooms);
+  })
 
   socket.on('sendMessage', message => {
     const user = getUser(socket.id)
     io.in(user.room).emit('message', { user: user.name, text: message });
     console.log(message)
-})
+  })
 
   socket.on("disconnect", () => {
     console.log("User disconnected");
@@ -129,9 +122,7 @@ io.on("connection", socket => {
         io.in(user.room).emit('notification', { title: 'Someone just left', description: `${user.name} just left the room` })
         io.in(user.room).emit('users', getUsers(user.room))
     }
-
-})
-
+  })
 })
 
 server.listen(4000, () => console.log("server is running on port 4000"));

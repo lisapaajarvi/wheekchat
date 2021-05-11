@@ -39,16 +39,21 @@ export function UserProvider({ children }) {
         socket.emit('login', name);
     }
 
-    const joinRoom = (roomName) => {
+    const joinOpenRoom = (newRoom) => {
+        setRoom(newRoom.name);
+        setMessages([]);
+        socket.emit('join-room', newRoom);
+    }
+    const createOpenRoom = (roomName) => {
         setRoom(roomName);
         setMessages([]);
-        socket.emit('join-room', roomName);
+        socket.emit('join-room', {name: roomName, isLocked: false});
     }
 
     const createLockedRoom = (roomName, password) => {
         setRoom(roomName);
         setMessages([]);
-        socket.emit('create-locked-room', roomName, password);
+        socket.emit('join-room', {name: roomName, isLocked: true, password: password});
     }
 
     const joinLockedRoom = (roomName, password) => {
@@ -67,8 +72,9 @@ export function UserProvider({ children }) {
             rooms,
             messages,
             saveUser,
-            joinRoom,
+            createOpenRoom,
             createLockedRoom,
+            joinOpenRoom,
             joinLockedRoom,
             sendMessage,
             openRooms,
