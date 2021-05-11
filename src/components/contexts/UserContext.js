@@ -5,7 +5,6 @@ const UserContext = React.createContext()
 
 export const UserConsumer = UserContext.Consumer
 
-
 export function UserProvider({ children }) {
     const ENDPOINT = 'http://127.0.0.1:4000/';
     const [socket] = useState(io(ENDPOINT, { transports: ['websocket', 'polling'] }));

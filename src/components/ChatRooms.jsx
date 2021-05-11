@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import LockIcon from '@material-ui/icons/Lock';
 import '../css/chatrooms.css';
+import logo from '../assets/logo_text2.png'
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
@@ -57,7 +58,7 @@ function ChatRooms() {
     return (
         <div className="roomStyle">
             <div className="titleBox">
-                <Typography variant="h5" style={{textDecoration: 'underline'}}>CHAT ROOMS</Typography>
+                <img className="logoRooms" style={{width: 180, marginTop: 30 }} src={logo} alt="Logo" />
             </div>
             <p>Welcome {user} </p>
             <ul>
@@ -71,7 +72,7 @@ function ChatRooms() {
                 </Typography>  
             </ul>
 
-            <Divider />
+            <Divider style={{background: '#9DA1C2'}} />
 
             <ul>
                 <Typography variant="h6">
@@ -116,7 +117,7 @@ function ChatRooms() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCreateRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
-                    <Button onClick={onCreateRoomClick} variant="contained" color="primary" style={{background: 'black', color: 'white'}}>CREATE</Button>
+                    <Button onClick={onCreateRoomClick} variant="contained" color="primary" style={{background: '#302F4A', color: 'white'}}>CREATE</Button>
                 </DialogActions>
             </Dialog>
 
