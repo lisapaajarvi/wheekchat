@@ -19,7 +19,6 @@ function ChatConnected() {
     }
 
     return (
-
         <div className="connectedStyle">
             {room? (
                 <>
@@ -28,10 +27,9 @@ function ChatConnected() {
             </div>
             <div className="chatBox">
                  <ul className="ulStyle">
-                    {messages.map((msg, index) => (
-                 
+                    {messages.map((msg, index) => (                 
                         <li className="textBox" key={index}>
-                            {msg.user + ': ' +  msg.text}
+                            <b>{msg.user}</b> {': ' +  msg.text}
                         </li>
                     ))}
                 </ul>

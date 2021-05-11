@@ -11,7 +11,7 @@ import logo from '../assets/logo_text2.png'
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { rooms, user, joinRoom } = useContext(UserContext);
+    const { rooms, joinRoom } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
     const [roomName, setRoomName] = React.useState('');
@@ -38,10 +38,10 @@ function ChatRooms() {
             <div className="titleBox">
                 <img className="logoRooms" style={{width: 180, marginTop: 30 }} src={logo} alt="Logo" />
             </div>
-            <ul className="roomLink">
+            <ul>
                  <Typography variant="h6">
                     {rooms.map((room, index) => (                       
-                        <li key={index} onClick={() => joinRoom(room)}>
+                        <li className="roomLink" style={{listStyle: 'none'}} key={index} onClick={() => joinRoom(room)}>
                             {room}
                         </li>
                     ))}
@@ -52,20 +52,18 @@ function ChatRooms() {
 
             <ul>
                 <Typography variant="h6">
-                    <li>ROOM {4}<LockIcon style={{marginLeft: '0.5rem'}}/></li>
-                    <li>ROOM {5}<LockIcon style={{marginLeft: '0.5rem'}}/></li>
-                    <li>ROOM {6}<LockIcon style={{marginLeft: '0.5rem'}}/></li>
+                    <li style={{listStyle: 'none'}}>Hemliga rummet<LockIcon style={{marginLeft: '0.5rem'}}/></li>
                 </Typography>
             </ul>
 
             <Divider />
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" onClick={openCreateRoomModal} size="small" style={{margin: '2rem 0 1rem 0', background: 'white', color: '#302F4A'}}>CREATE ROOM</Button>
+                <Button variant="contained" onClick={openCreateRoomModal} style={{margin: '2rem 0 1rem 0', background: 'white', color: '#302F4A'}}>CREATE ROOM</Button>
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Link to="/" style={{textDecoration: 'none'}}>
-                    <Button variant="contained" size="small" style={{background: 'white', color: '#302F4A', marginBottom: '2rem'}}>LOG OUT</Button>
+                    <Button variant="contained" style={{background: 'white', color: '#302F4A', marginBottom: '2rem'}}>LOG OUT</Button>
                 </Link>
             </div>
 
