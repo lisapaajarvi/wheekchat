@@ -39,9 +39,6 @@ p, h2 {
         width: 100%;
         height: 100%;
     }
-    p {
-        font-size: 0.8rem;
-    }
 }
 @media (min-width: 768px) {
     .connectedStyle {

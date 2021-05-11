@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Typography, TextField, Button } from '@material-ui/core';
 import '../css/chatconnected.css';
 import UserContext from './contexts/UserContext';
-import logo from '../assets/logo_text2.png'
+import logo from '../assets/logo.png'
 
 function ChatConnected() {
     const [message, setMessage] = useState('')
@@ -57,7 +57,7 @@ function ChatConnected() {
                 <>
                 <h2>Welcome {user}!</h2>
                 <p>Please create a new room or click on a room to join.</p>
-                <img className="logo" style={{width: 300, marginTop: 30 }} src={logo} alt="Logo" />
+                <img className="logo" style={{width: 180, marginTop: 30 }} src={logo} alt="Logo" />
                 </>
             )}             
         </div>
