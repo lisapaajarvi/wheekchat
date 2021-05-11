@@ -99,7 +99,7 @@ io.on("connection", socket => {
   })
 
   socket.on('join-room', (room) => {
-    socket.join(room);
+    socket.join(room.name);
     addRoom(room, socket)
     console.log("joined room: ", room)
     socket.emit("rooms", rooms);
@@ -112,8 +112,7 @@ io.on("connection", socket => {
   socket.on('sendMessage', message => {
     const user = getUser(socket.id)
     io.in(user.room).emit('message', { user: user.name, text: message });
-    console.log(message)
-  })
+})
 
   socket.on("disconnect", () => {
     console.log("User disconnected");
