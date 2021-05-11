@@ -10,11 +10,9 @@ import '../css/chatrooms.css';
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { user, joinRoom } = useContext(UserContext);
-    console.log(user)
+    const { rooms, user, joinRoom } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
-
     const [roomName, setRoomName] = React.useState('');
 
     const handleCreateRoomClose = () => {
@@ -24,14 +22,14 @@ function ChatRooms() {
     function openCreateRoomModal() {
         setOpenCreateRoom(true);
     }
-
+    
     function onCreateRoomClick() {
         joinRoom(roomName);
         setOpenCreateRoom(false);
         setRoomName('');
     }
     const handleRoomName = (e) => {
-         setRoomName(e.target.value)
+        setRoomName(e.target.value)
     }
 
     return (
@@ -41,11 +39,13 @@ function ChatRooms() {
             </div>
             <p>Welcome {user}</p>
             <ul>
-                <Typography variant="h6">
-                    <li>ROOM {1}</li>
-                    <li>ROOM {2}</li>
-                    <li>ROOM {3}</li>
-                </Typography>
+                 <Typography variant="h6">
+                    {rooms.map((room, index) => (                       
+                        <li key={index} onClick={() => joinRoom(room)}>
+                            {room}
+                        </li>
+                    ))}
+                </Typography>  
             </ul>
 
             <Divider />

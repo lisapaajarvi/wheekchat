@@ -7,48 +7,59 @@ export const UserConsumer = UserContext.Consumer
 
 
 export function UserProvider({ children }) {
+    const ENDPOINT = 'http://127.0.0.1:4000/';
+    const [socket] = useState(io(ENDPOINT, { transports: ['websocket', 'polling'] }));
     const [user, setUser] = useState();
-    const [room, setRoom] = useState();
-    const [socket] = useState(io());
+    //const [users, setUsers] = useState([])
     const [messages, setMessages] = useState([]);
-    
+    const [room, setRoom] = useState();
+    const [rooms, setRooms] = useState([]);
+
     useEffect(() => {
-        const incomingMessage = (message) => {
-            let messageList = messages;
-            messageList.push(message);
-            setMessages(messageList)
-            console.log(messages);
-        }
+        // const saveIncomingUsers = (incomingUsers) => {
+        //     setUsers(incomingUsers)
+        //     console.log(incomingUsers);
+        //     console.log(users);
+        // }
+
         socket.on('connect', () => {
             console.log(`I'm connected with the back-end`);
+            socket.emit("getRooms", {})
         });
-        socket.on('message', incomingMessage);
-        
-        // socket.on('join-room', incomingMessage);
-        // socket.on('etc..', incomingMessage);
-    }, [messages, socket])
 
+        socket.on("rooms", activeRooms => {
+            setRooms(activeRooms);
+        })        
+
+        socket.on("message", msg => {
+            setMessages([...messages, msg]);
+        })
+
+        }, [messages, rooms, socket])       
 
     const sendMessage = (message) => {
-        socket.send(user + ": " + message)
+        socket.emit('sendMessage', message)
     }
 
-    const saveUser = (username) => {
-        setUser(username)
-        socket.emit('set-name', username);
+    const saveUser = (name) => {
+        setUser(name)
+        socket.emit('login', name);
     }
 
     const joinRoom = (roomName) => {
         setRoom(roomName);
+        setMessages([]);
         socket.emit('join-room', roomName);
     }
+
 
     return (
         <UserContext.Provider value={{
             room,
             user,
+            rooms,
             messages,
-            setUser,
+            //users,
             saveUser,
             joinRoom,
             sendMessage

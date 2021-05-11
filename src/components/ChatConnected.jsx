@@ -5,9 +5,9 @@ import UserContext from './contexts/UserContext';
 
 function ChatConnected() {
     const [message, setMessage] = useState('')
-    const { user, room, messages, sendMessage } = useContext(UserContext)
 
-    console.log("Nu tänker jag göra en html tabell med " + messages.length + "mess")
+    const { messages, sendMessage, user, room } = useContext(UserContext)
+
     const handleClick = () => {
         sendMessage(message)
         setMessage('')
@@ -18,17 +18,20 @@ function ChatConnected() {
     }
 
     return (
+
         <div className="connectedStyle">
-            <div className="titleBox">
+            {room? (
+                <>
+                <div className="titleBox">
                 <Typography variant="h5" style={{textDecoration: 'underline'}}>{user} @ {room}</Typography>
             </div>
             <div className="chatBox">
                 <Typography>CHAT TEXT GOES HERE</Typography>
-                <ul>
-                    {messages.map((chatMessage, index) => (
+                 <ul>
+                    {messages.map((msg, index) => (
                  
                         <li key={index}>
-                            {chatMessage}
+                            {msg.user + ':' + msg.text}
                         </li>
                     ))}
                 </ul>
@@ -52,6 +55,14 @@ function ChatConnected() {
                     SEND
                 </Button>
             </div>
+            </>
+            ):(
+                <>
+                <p>Welcome {user}!</p>
+                <p>Please create a new room or click on a room to join.</p>
+                </>
+            )} 
+            
         </div>
     )    
 }
