@@ -84,10 +84,17 @@ io.on("connection", socket => {
   })
 
   socket.on('join-room', (room) => {
+    // kolla om det är rätt lösenord
+    if (!isPasswordOk()) {
+      socket.emit('join-room-response', { name: room.name, success: false })
+      return
+    }
+    
     socket.join(room.name);
     addRoom(room, socket)
     console.log("joined room: ", room)
     socket.emit("rooms", rooms);
+    socket.emit('join-room-response', { name: room.name, success: true })
   });
 
   socket.on("getRooms", ()=> {

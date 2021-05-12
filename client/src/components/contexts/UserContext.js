@@ -13,6 +13,33 @@ export function UserProvider({ children }) {
     const [room, setRoom] = useState();
     const [rooms, setRooms] = useState([]);
 
+    // useEffect(() => {
+    //     const onMessage = msg => {
+    //         console.log('HEJ')
+    //         setMessages([...messages, msg]);
+    //     }
+
+    //     const onConnect = () => {
+    //         console.log("Connected to server");
+    //         socket.emit("getRooms", {})
+    //     }
+
+    //     const onRooms = activeRooms => {
+    //         setRooms(activeRooms);
+    //     }        
+
+    //     socket.on("message", onMessage)
+    //     socket.on("rooms", onRooms)
+    //     socket.on("connect", onConnect)
+
+    //     return () => {
+    //         socket.off("message", onMessage)
+    //         socket.off("rooms", onRooms)
+    //         socket.off("connect", onConnect)
+    //     }
+
+    // }, [messages, socket])  
+
     useEffect(() => {
         socket.on('connect', () => {
             console.log("Connected to server");
@@ -24,10 +51,19 @@ export function UserProvider({ children }) {
         })        
 
         socket.on("message", msg => {
-            setMessages([...messages, msg]);
+            console.log('HEJ')
+            setMessages((prevMessages) => [...prevMessages, msg]);
         })
 
-        }, [messages, rooms, socket])       
+        socket.on("join-room-response", ({ name, success }) => {
+            if (success) {
+                // Visa rum UI
+            } else {
+                // fel lösenord promt till användaren
+            }
+        })
+
+    }, [socket])       
 
     const sendMessage = (message) => {
         socket.emit('sendMessage', message)
@@ -46,17 +82,17 @@ export function UserProvider({ children }) {
     const createOpenRoom = (roomName) => {
         setRoom(roomName);
         setMessages([]);
-        socket.emit('join-room', {name: roomName, isLocked: false});
+        socket.emit('join-room', { name: roomName, isLocked: false });
     }
 
     const createLockedRoom = (roomName, password) => {
         setRoom(roomName);
         setMessages([]);
-        socket.emit('join-room', {name: roomName, isLocked: true, password: password});
+        socket.emit('join-room', { name: roomName, isLocked: true, password });
     }
 
     const joinLockedRoom = (roomName, password) => {
-        //socket.emit('join-locked-room', room, password);
+        socket.emit('join-room', { name: roomName, password });
         console.log(roomName + password)
         //setRoom(roomName);
         //setMessages([]);

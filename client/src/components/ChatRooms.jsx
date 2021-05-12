@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Typography, Divider, Button, TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
@@ -18,6 +18,10 @@ function ChatRooms() {
     const [openJoinLockedRoom, setOpenJoinLockedRoom] = React.useState(false); 
     const [roomName, setRoomName] = React.useState('');
     const [password, setPassword] = React.useState('');
+
+    useEffect(() => {
+        // socket.
+    }, [])
 
     const handleCreateRoomClose = () => {
         setOpenCreateRoom(false);
