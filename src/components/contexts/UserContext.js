@@ -15,7 +15,7 @@ export function UserProvider({ children }) {
 
     useEffect(() => {
         socket.on('connect', () => {
-            console.log(`I'm connected with the back-end`);
+            console.log("connected to server");
             socket.emit("getRooms", {})
         });
 

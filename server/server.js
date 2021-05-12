@@ -10,27 +10,12 @@ app.use(cors())
 
 // ROOMS ARRAY
 
-const rooms = [
-  {
-    name: 'chatt',
-    isLocked: true,
-    password: 'hej'
-  },
-  {
-    name: 'chatt2',
-    isLocked: false
-  },
-];
+const rooms = [];
 
 // USERS ARRAY
-const users = []
+const users = [];
 
 const addUser = (id, name) => {
-    const existingUser = users.find(user => user.name.trim().toLowerCase() === name.trim().toLowerCase())
-
-    if (existingUser) return { error: "Username has already been taken" }
-    if (!name) return { error: "Username is required" }
-
     const user = { id, name, room: '' }
     users.push(user)
     return { user }
