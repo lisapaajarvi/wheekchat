@@ -8,21 +8,33 @@ const io = socket(server, {pingTimeout: 25000});
 
 app.use(cors())
 
-// ROOMS ARRAY
-
-const rooms = [];
 
 // USERS ARRAY
 const users = [];
 
 const addUser = (id, name) => {
-    const user = { id, name, room: '' }
-    users.push(user)
-    return { user }
+  const user = { id, name, room: '' }
+  users.push(user)
+  return { user }
 }
 
+const deleteUser = (id) => {
+  const index = users.findIndex((user) => user.id === id);
+  if (index !== -1) return users.splice(index, 1)[0];
+}
+
+const getUser = (id) => {
+  let user = users.find(user => user.id === id)
+  return user
+}
+
+const getUsers = (room) => users.filter(user => user.room === room)
+
+// ROOMS ARRAY
+const rooms = [];
+
 const addRoom = (room, socket) => {
-    console.log("room: " + room + "socket.id: " + socket.id)
+  console.log("room: " + room + "socket.id: " + socket.id)
     let currentUser = users.find((user) => user.id === socket.id)
     console.log("this is the current user: " + currentUser.name)
     if(currentUser.room) {
@@ -62,18 +74,6 @@ const deleteRoom = (oldRoom) => {
     console.log("room " + oldRoom + " has been removed")
   } 
 }
-
-const deleteUser = (id) => {
-  const index = users.findIndex((user) => user.id === id);
-  if (index !== -1) return users.splice(index, 1)[0];
-}
-
-const getUser = (id) => {
-  let user = users.find(user => user.id === id)
-  return user
-}
-
-const getUsers = (room) => users.filter(user => user.room === room)
 
 
 // SERVER CONNECTION
