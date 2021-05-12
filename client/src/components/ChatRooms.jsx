@@ -58,7 +58,7 @@ function ChatRooms() {
     return (
         <div className="roomStyle">
             <div className="titleBox">
-                <img className="logoRooms" style={{width: 180, marginTop: 30 }} src={logo} alt="Logo" />
+                <img className="logoRooms" style={{width: '15rem', margin: '1rem' }} src={logo} alt="Logo" />
             </div>
             <ul>
                     <Typography variant="h6">

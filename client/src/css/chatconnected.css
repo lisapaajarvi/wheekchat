@@ -31,13 +31,15 @@ p, h2 {
 }
 
 .chatBox {
+    display: flex;
+    flex-direction: column-reverse;
     width: 80%;
     height: 80%;
     min-height: 12rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 10px;
     background: white;
-    
+    overflow: auto;   
 }
 
 .ulStyle {
@@ -71,6 +73,6 @@ p, h2 {
 }
 @media (min-width: 768px) {
     .connectedStyle {
-        width: 75%;
+        width: 70%;
     }
 }

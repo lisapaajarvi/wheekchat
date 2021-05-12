@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors')
 const server = http.createServer(app);
 const socket = require("socket.io");
-const io = socket(server, {pingTimeout: 120000});
+const io = socket(server, {pingTimeout: 25000});
 
 app.use(cors())
 
