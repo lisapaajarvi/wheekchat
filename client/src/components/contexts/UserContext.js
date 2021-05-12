@@ -56,9 +56,10 @@ export function UserProvider({ children }) {
     }
 
     const joinLockedRoom = (roomName, password) => {
+        //socket.emit('join-locked-room', room, password);
+        console.log(roomName + password)
         //setRoom(roomName);
         //setMessages([]);
-        //socket.emit('join-locked-room', roomName, password);
     }
 
     const openRooms = rooms.filter(room => room.isLocked === false);

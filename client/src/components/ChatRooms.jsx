@@ -49,18 +49,23 @@ function ChatRooms() {
     }
 
     function openJoinLockedRoomModal(room) {
+        setRoomName(room.name)
         setOpenJoinLockedRoom(true)
     }
 
     
     const handleJoinLockedRoomClose = () => {
         setOpenJoinLockedRoom(false);
+        setRoomName('')
+        setPassword('')
     };
 
-    function onJoinLockedRoomClick(room) {
-        setRoomName(room.name)
-        setPassword()
-        setOpenJoinLockedRoom(true)
+    function onJoinLockedRoomClick() {
+        joinLockedRoom(roomName, password)
+        //setOpenJoinLockedRoom(false)
+        //setRoomName('')
+        //setPassword('')
+
     }
 
     const handleRoomName = (e) => {
@@ -162,22 +167,22 @@ function ChatRooms() {
 
                         {/* Join locked room modal */}
                         <Dialog open={openJoinLockedRoom} onClose={handleJoinLockedRoomClose} aria-labelledby="form-dialog-create">
-                 <DialogTitle id="create">Join locked room</DialogTitle>
+                 <DialogTitle id="create">Join locked room {roomName}</DialogTitle>
                  <DialogContent>
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="name"
-                        label="Room name"
-                        type="text"
-                        onChange={handleRoomName}
-                        value={roomName}
+                        id="password"
+                        label="Password"
+                        type="password"
+                        onChange={handlePassword}
+                        defaultValue={password}
                         fullWidth
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCreateRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
-                    <Button onClick={onJoinLockedRoomClick} variant="contained" color="primary" style={{background: '#302F4A', color: 'white'}}>CREATE</Button>
+                    <Button onClick={handleJoinLockedRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
+                    <Button onClick={onJoinLockedRoomClick} variant="contained" color="primary" style={{background: '#302F4A', color: 'white'}}>JOIN</Button>
                 </DialogActions>
             </Dialog>
         </div>
