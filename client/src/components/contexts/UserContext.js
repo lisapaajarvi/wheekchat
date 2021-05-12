@@ -57,8 +57,12 @@ export function UserProvider({ children }) {
 
         socket.on("join-room-response", ({ name, success }) => {
             if (success) {
-                // Visa rum UI
+                console.log("successfully joined room: " + name)
+                setRoom(name);
+                setMessages([]);
+
             } else {
+                console.log("wrong password")
                 // fel lösenord promt till användaren
             }
         })
@@ -92,10 +96,8 @@ export function UserProvider({ children }) {
     }
 
     const joinLockedRoom = (roomName, password) => {
-        socket.emit('join-room', { name: roomName, password });
+        socket.emit('join-room', { name: roomName, isLocked: true, password }, password);
         console.log(roomName + password)
-        //setRoom(roomName);
-        //setMessages([]);
     }
 
     const openRooms = rooms.filter(room => room.isLocked === false);

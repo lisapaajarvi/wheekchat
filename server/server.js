@@ -75,6 +75,16 @@ const deleteRoom = (oldRoom) => {
   } 
 }
 
+const checkPassword = (roomName, password) => {
+  const roomToJoin = rooms.find((r) => r.name === roomName);
+  if(roomToJoin.password === password) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
 
 // SERVER CONNECTION
 io.on("connection", socket => {
@@ -83,13 +93,14 @@ io.on("connection", socket => {
     addUser(socket.id, name)
   })
 
-  socket.on('join-room', (room) => {
-    // kolla om det är rätt lösenord
-    if (!isPasswordOk()) {
-      socket.emit('join-room-response', { name: room.name, success: false })
-      return
+  socket.on('join-room', (room, password) => {
+    if(password) {
+      const isPasswordOK = checkPassword(room.name, password)
+      if(!isPasswordOK) {
+        socket.emit('join-room-response', { name: room.name, success: false })
+        return
+      }
     }
-    
     socket.join(room.name);
     addRoom(room, socket)
     console.log("joined room: ", room)

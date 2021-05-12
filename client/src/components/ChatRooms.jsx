@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Typography, Divider, Button, TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
@@ -13,11 +13,12 @@ import UserContext from './contexts/UserContext'
 function ChatRooms() {
     const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms } = useContext(UserContext);
     
-    const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
-    const [openCreateLockedRoom, setOpenCreateLockedRoom] = React.useState(false);    
-    const [openJoinLockedRoom, setOpenJoinLockedRoom] = React.useState(false); 
-    const [roomName, setRoomName] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [openCreateRoom, setOpenCreateRoom] = useState(false);
+    const [openCreateLockedRoom, setOpenCreateLockedRoom] = useState(false);    
+    const [openJoinLockedRoom, setOpenJoinLockedRoom] = useState(false); 
+    const [roomName, setRoomName] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState(false)
 
     useEffect(() => {
         // socket.
@@ -171,8 +172,15 @@ function ChatRooms() {
 
                         {/* Join locked room modal */}
                         <Dialog open={openJoinLockedRoom} onClose={handleJoinLockedRoomClose} aria-labelledby="form-dialog-create">
-                 <DialogTitle id="create">Join locked room {roomName}</DialogTitle>
+                 <DialogTitle>Join locked room @{roomName}</DialogTitle>
                  <DialogContent>
+                    {passwordError&&
+                        <div>
+                            <Typography variant="h6">
+                                Wrong password! Please try again.
+                            </Typography>
+                        </div>
+                    }
                     <TextField
                         autoFocus
                         margin="dense"
