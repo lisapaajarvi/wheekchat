@@ -12,6 +12,8 @@ export function UserProvider({ children }) {
     const [messages, setMessages] = useState([]);
     const [room, setRoom] = useState();
     const [rooms, setRooms] = useState([]);
+    const [passwordError, setPasswordError] = useState(false);
+    const [passwordModalOpen, setPasswordModalOpen] = useState(false);
 
     // useEffect(() => {
     //     const onMessage = msg => {
@@ -54,16 +56,17 @@ export function UserProvider({ children }) {
             console.log('HEJ')
             setMessages((prevMessages) => [...prevMessages, msg]);
         })
-
         socket.on("join-room-response", ({ name, success }) => {
             if (success) {
                 console.log("successfully joined room: " + name)
                 setRoom(name);
                 setMessages([]);
+                setPasswordError(false);
+                setPasswordModalOpen(false);
 
             } else {
                 console.log("wrong password")
-                // fel lösenord promt till användaren
+                setPasswordError(true)
             }
         })
 
@@ -116,7 +119,10 @@ export function UserProvider({ children }) {
             joinLockedRoom,
             sendMessage,
             openRooms,
-            closedRooms
+            closedRooms,
+            passwordError,
+            passwordModalOpen,
+            setPasswordModalOpen
         }}>
             {children}
         </UserContext.Provider>

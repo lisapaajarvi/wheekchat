@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Typography, Divider, Button, TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
@@ -11,18 +11,13 @@ import logo from '../assets/logo_text2.png'
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms } = useContext(UserContext);
+    const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms, passwordError, passwordModalOpen, setPasswordModalOpen } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = useState(false);
     const [openCreateLockedRoom, setOpenCreateLockedRoom] = useState(false);    
-    const [openJoinLockedRoom, setOpenJoinLockedRoom] = useState(false); 
+    //const [openJoinLockedRoom, setOpenJoinLockedRoom] = useState(false); 
     const [roomName, setRoomName] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordError, setPasswordError] = useState(false)
-
-    useEffect(() => {
-        // socket.
-    }, [])
 
     const handleCreateRoomClose = () => {
         setOpenCreateRoom(false);
@@ -55,22 +50,19 @@ function ChatRooms() {
 
     function openJoinLockedRoomModal(room) {
         setRoomName(room.name)
-        setOpenJoinLockedRoom(true)
+        setPasswordModalOpen(true)
     }
 
     
     const handleJoinLockedRoomClose = () => {
-        setOpenJoinLockedRoom(false);
+        setPasswordModalOpen(false);
         setRoomName('')
         setPassword('')
     };
 
     function onJoinLockedRoomClick() {
         joinLockedRoom(roomName, password)
-        //setOpenJoinLockedRoom(false)
-        //setRoomName('')
-        //setPassword('')
-
+        setPassword('')
     }
 
     const handleRoomName = (e) => {
@@ -171,7 +163,7 @@ function ChatRooms() {
             </Dialog>
 
                         {/* Join locked room modal */}
-                        <Dialog open={openJoinLockedRoom} onClose={handleJoinLockedRoomClose} aria-labelledby="form-dialog-create">
+                        <Dialog open={passwordModalOpen} onClose={handleJoinLockedRoomClose} aria-labelledby="form-dialog-create">
                  <DialogTitle>Join locked room @{roomName}</DialogTitle>
                  <DialogContent>
                     {passwordError&&

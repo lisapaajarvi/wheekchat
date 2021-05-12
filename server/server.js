@@ -85,7 +85,6 @@ const checkPassword = (roomName, password) => {
   }
 }
 
-
 // SERVER CONNECTION
 io.on("connection", socket => {
   
