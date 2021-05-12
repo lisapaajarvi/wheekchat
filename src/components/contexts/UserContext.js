@@ -15,7 +15,7 @@ export function UserProvider({ children }) {
 
     useEffect(() => {
         socket.on('connect', () => {
-            console.log(`I'm connected with the back-end`);
+            console.log("connected to server");
             socket.emit("getRooms", {})
         });
 
@@ -38,12 +38,31 @@ export function UserProvider({ children }) {
         socket.emit('login', name);
     }
 
-    const joinRoom = (roomName) => {
+    const joinOpenRoom = (newRoom) => {
+        setRoom(newRoom.name);
+        setMessages([]);
+        socket.emit('join-room', newRoom);
+    }
+    const createOpenRoom = (roomName) => {
         setRoom(roomName);
         setMessages([]);
-        socket.emit('join-room', roomName);
+        socket.emit('join-room', {name: roomName, isLocked: false});
     }
 
+    const createLockedRoom = (roomName, password) => {
+        setRoom(roomName);
+        setMessages([]);
+        socket.emit('join-room', {name: roomName, isLocked: true, password: password});
+    }
+
+    const joinLockedRoom = (roomName, password) => {
+        //setRoom(roomName);
+        //setMessages([]);
+        //socket.emit('join-locked-room', roomName, password);
+    }
+
+    const openRooms = rooms.filter(room => room.isLocked === false);
+    const closedRooms = rooms.filter(room => room.isLocked === true);
 
     return (
         <UserContext.Provider value={{
@@ -51,10 +70,14 @@ export function UserProvider({ children }) {
             user,
             rooms,
             messages,
-            //users,
             saveUser,
-            joinRoom,
-            sendMessage
+            createOpenRoom,
+            createLockedRoom,
+            joinOpenRoom,
+            joinLockedRoom,
+            sendMessage,
+            openRooms,
+            closedRooms
         }}>
             {children}
         </UserContext.Provider>
