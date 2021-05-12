@@ -65,14 +65,11 @@ function ChatRooms() {
                     {openRooms.map((room, index) => (                      
                         <li className="roomLink" style={{listStyle: 'none'}} key={index} onClick={() => joinOpenRoom(room)}>
                             {room.name}
-                        </li>
-                        
+                        </li>                        
                     ))}
                 </Typography>  
             </ul>
-
             <Divider style={{background: '#9DA1C2'}} />
-
             <ul>
                 <Typography variant="h6">
                     {closedRooms.map((room, index) => (                       
@@ -82,10 +79,8 @@ function ChatRooms() {
                         </li>
                     ))}
                 </Typography>  
-
             </ul>
             <Divider />
-
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Button variant="contained" onClick={openCreateRoomModal} style={{margin: '2rem 0 0 0', background: 'black', color: 'white'}}>CREATE OPEN ROOM</Button>
             </div>
