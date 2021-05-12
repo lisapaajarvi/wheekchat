@@ -15,6 +15,7 @@ function ChatRooms() {
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
     const [openCreateLockedRoom, setOpenCreateLockedRoom] = React.useState(false);    
+    const [openJoinLockedRoom, setOpenJoinLockedRoom] = React.useState(false); 
     const [roomName, setRoomName] = React.useState('');
     const [password, setPassword] = React.useState('');
 
@@ -47,6 +48,21 @@ function ChatRooms() {
         setPassword('');
     }
 
+    function openJoinLockedRoomModal(room) {
+        setOpenJoinLockedRoom(true)
+    }
+
+    
+    const handleJoinLockedRoomClose = () => {
+        setOpenJoinLockedRoom(false);
+    };
+
+    function onJoinLockedRoomClick(room) {
+        setRoomName(room.name)
+        setPassword()
+        setOpenJoinLockedRoom(true)
+    }
+
     const handleRoomName = (e) => {
         setRoomName(e.target.value)
     }
@@ -73,7 +89,7 @@ function ChatRooms() {
             <ul>
                 <Typography variant="h6">
                     {closedRooms.map((room, index) => (                       
-                        <li className="roomLink" style={{listStyle: 'none'}} key={index} onClick={() => joinLockedRoom(room)}>
+                        <li className="roomLink" style={{listStyle: 'none'}} key={index} onClick={() => openJoinLockedRoomModal(room)}>
                             {room.name} 
                             <LockIcon style={{marginLeft: '0.5rem'}}/> 
                         </li>
@@ -141,6 +157,27 @@ function ChatRooms() {
                 <DialogActions>
                     <Button onClick={handleCreateLockedRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
                     <Button onClick={onCreateLockedRoomClick} variant="contained" color="primary" style={{background: 'black', color: 'white'}}>CREATE</Button>
+                </DialogActions>
+            </Dialog>
+
+                        {/* Join locked room modal */}
+                        <Dialog open={openJoinLockedRoom} onClose={handleJoinLockedRoomClose} aria-labelledby="form-dialog-create">
+                 <DialogTitle id="create">Join locked room</DialogTitle>
+                 <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Room name"
+                        type="text"
+                        onChange={handleRoomName}
+                        value={roomName}
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCreateRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
+                    <Button onClick={onJoinLockedRoomClick} variant="contained" color="primary" style={{background: '#302F4A', color: 'white'}}>CREATE</Button>
                 </DialogActions>
             </Dialog>
         </div>
