@@ -11,16 +11,16 @@ import logo from '../assets/logo_text2.png'
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms, passwordError, passwordModalOpen, setPasswordModalOpen } = useContext(UserContext);
+    const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms, passwordError, setPasswordError, passwordModalOpen, setPasswordModalOpen } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = useState(false);
     const [openCreateLockedRoom, setOpenCreateLockedRoom] = useState(false);    
-    //const [openJoinLockedRoom, setOpenJoinLockedRoom] = useState(false); 
     const [roomName, setRoomName] = useState('');
     const [password, setPassword] = useState('');
 
     const handleCreateRoomClose = () => {
         setOpenCreateRoom(false);
+        setRoomName('')
     };
 
     function openCreateRoomModal() {
@@ -29,6 +29,8 @@ function ChatRooms() {
 
     const handleCreateLockedRoomClose = () => {
         setOpenCreateLockedRoom(false);
+        setRoomName('')
+        setPassword('')
     };
 
     function openCreateLockedRoomModal() {
@@ -58,6 +60,7 @@ function ChatRooms() {
         setPasswordModalOpen(false);
         setRoomName('')
         setPassword('')
+        setPasswordError(false)
     };
 
     function onJoinLockedRoomClick() {
@@ -152,7 +155,7 @@ function ChatRooms() {
                         label="Password"
                         type="password"
                         onChange={handlePassword}
-                        defaultValue={password}
+                        value={password}
                         fullWidth
                     />
                 </DialogContent>
@@ -180,7 +183,7 @@ function ChatRooms() {
                         label="Password"
                         type="password"
                         onChange={handlePassword}
-                        defaultValue={password}
+                        value={password}
                         fullWidth
                     />
                 </DialogContent>

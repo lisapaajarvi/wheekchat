@@ -121,6 +121,7 @@ export function UserProvider({ children }) {
             openRooms,
             closedRooms,
             passwordError,
+            setPasswordError,
             passwordModalOpen,
             setPasswordModalOpen
         }}>
