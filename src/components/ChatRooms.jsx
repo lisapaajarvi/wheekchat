@@ -11,7 +11,7 @@ import logo from '../assets/logo_text2.png'
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { user, joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms } = useContext(UserContext);
+    const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
     const [openCreateLockedRoom, setOpenCreateLockedRoom] = React.useState(false);    
@@ -60,11 +60,10 @@ function ChatRooms() {
             <div className="titleBox">
                 <img className="logoRooms" style={{width: 180, marginTop: 30 }} src={logo} alt="Logo" />
             </div>
-            <p>Welcome {user} </p>
             <ul>
-                 <Typography variant="h6">
+                    <Typography variant="h6">
                     {openRooms.map((room, index) => (                      
-                        <li key={index} onClick={() => joinOpenRoom(room)}>
+                        <li className="roomLink" style={{listStyle: 'none'}} key={index} onClick={() => joinOpenRoom(room)}>
                             {room.name}
                         </li>
                         
@@ -77,7 +76,7 @@ function ChatRooms() {
             <ul>
                 <Typography variant="h6">
                     {closedRooms.map((room, index) => (                       
-                        <li key={index} onClick={() => joinLockedRoom(room)}>
+                        <li className="roomLink" style={{listStyle: 'none'}} key={index} onClick={() => joinLockedRoom(room)}>
                             {room.name} 
                             <LockIcon style={{marginLeft: '0.5rem'}}/> 
                         </li>
@@ -85,7 +84,6 @@ function ChatRooms() {
                 </Typography>  
 
             </ul>
-
             <Divider />
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
