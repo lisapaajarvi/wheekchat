@@ -8,7 +8,6 @@ const io = socket(server, {pingTimeout: 25000});
 
 app.use(cors())
 
-
 // USERS ARRAY
 const users = [];
 
@@ -36,21 +35,14 @@ const rooms = [];
 const addRoom = (room, socket) => {
   console.log("room: " + room + "socket.id: " + socket.id)
     let currentUser = users.find((user) => user.id === socket.id)
-    console.log("this is the current user: " + currentUser.name)
     if(currentUser.room) {
-      console.log("this is the current user's old room: " + currentUser.room)
       socket.leave(currentUser.room)
-      console.log("left old room")
       const oldRoom = currentUser.room
       currentUser.room = room.name;
       const oldRoomUser = users.find((user) => user.room === oldRoom);
       
       if (!oldRoomUser) {
         deleteRoom(oldRoom);
-        console.log("room " + oldRoom + " is empty and can be deleted")
-      }
-      else {
-        console.log("room in use " + oldRoomUser.room + " by " + oldRoomUser.name )
       }
     }
     else

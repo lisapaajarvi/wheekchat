@@ -28,6 +28,7 @@ export function UserProvider({ children }) {
         socket.on("message", msg => {
             setMessages((prevMessages) => [...prevMessages, msg]);
         })
+
         socket.on("join-room-response", ({ name, success }) => {
             if (success) {
                 console.log("successfully joined room: " + name)
@@ -35,7 +36,6 @@ export function UserProvider({ children }) {
                 setMessages([]);
                 setPasswordError(false);
                 setPasswordModalOpen(false);
-
             } else {
                 console.log("wrong password")
                 setPasswordError(true)
@@ -58,6 +58,7 @@ export function UserProvider({ children }) {
         setMessages([]);
         socket.emit('join-room', newRoom);
     }
+    
     const createOpenRoom = (roomName) => {
         setRoom(roomName);
         setMessages([]);

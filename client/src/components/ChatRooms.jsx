@@ -82,7 +82,7 @@ function ChatRooms() {
                 <img className="logoRooms" style={{width: '15rem', margin: '1rem' }} src={logo} alt="Logo" />
             </div>
             <ul>
-                    <Typography variant="h6">
+                <Typography variant="h6">
                     {openRooms.map((room, index) => (                      
                         <li className="roomLink" style={{listStyle: 'none'}} key={index} onClick={() => joinOpenRoom(room)}>
                             {room.name}
@@ -165,8 +165,8 @@ function ChatRooms() {
                 </DialogActions>
             </Dialog>
 
-                        {/* Join locked room modal */}
-                        <Dialog open={passwordModalOpen} onClose={handleJoinLockedRoomClose} aria-labelledby="form-dialog-create">
+            {/* Join locked room modal */}
+            <Dialog open={passwordModalOpen} onClose={handleJoinLockedRoomClose} aria-labelledby="form-dialog-create">
                  <DialogTitle>Join locked room @{roomName}</DialogTitle>
                  <DialogContent>
                     {passwordError&&
