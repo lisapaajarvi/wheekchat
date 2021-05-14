@@ -13,7 +13,7 @@ const users = [];
 
 const addUser = (id, name) => {
   const user = { id, name, room: '' }
-  users.push(user)
+  users.push(user);
   return { user }
 }
 
@@ -27,17 +27,17 @@ const getUser = (id) => {
   return user
 }
 
-const getUsers = (room) => users.filter(user => user.room === room)
+// const getUsers = (room) => users.filter(user => user.room === room)
 
 // ROOMS ARRAY
 const rooms = [];
 
 const addRoom = (room, socket) => {
-  console.log("room: " + room + "socket.id: " + socket.id)
     let currentUser = users.find((user) => user.id === socket.id)
+    
     if(currentUser.room) {
-      socket.leave(currentUser.room)
-      const oldRoom = currentUser.room
+      socket.leave(currentUser.room);
+      const oldRoom = currentUser.room;
       currentUser.room = room.name;
       const oldRoomUser = users.find((user) => user.room === oldRoom);
       
@@ -51,20 +51,14 @@ const addRoom = (room, socket) => {
     }
     const joinedRoom = rooms.find((r) => r.name === room.name);
     if(!joinedRoom) {
-      rooms.push(room)
+      rooms.push(room);
     }
-    socket.emit("rooms", rooms)
+    socket.emit("rooms", rooms);
 }
 
 const deleteRoom = (oldRoom) => {
   const index = rooms.findIndex(room => room.name === oldRoom);
-  if (index===-1) {
-    console.log("room " + oldRoom + " does not exist")
-  }
-  else {
-    rooms.splice(index, 1);
-    console.log("room " + oldRoom + " has been removed")
-  } 
+  rooms.splice(index, 1); 
 }
 
 const checkPassword = (roomName, password) => {
@@ -81,35 +75,35 @@ const checkPassword = (roomName, password) => {
 io.on("connection", socket => {
   
   socket.on('login', (name) => {
-    addUser(socket.id, name)
+    addUser(socket.id, name);
   })
 
   socket.on('join-room', (room, password) => {
     if(password) {
-      const isPasswordOK = checkPassword(room.name, password)
+      const isPasswordOK = checkPassword(room.name, password);
       if(!isPasswordOK) {
         socket.emit('join-room-response', { name: room.name, success: false })
         return
       }
     }
     socket.join(room.name);
-    addRoom(room, socket)
+    addRoom(room, socket);
     console.log("joined room: ", room)
     socket.emit("rooms", rooms);
-    socket.emit('join-room-response', { name: room.name, success: true })
+    socket.emit('join-room-response', { name: room.name, success: true });
   });
 
-  socket.on("getRooms", ()=> {
+  socket.on("get-rooms", ()=> {
     socket.emit("rooms", rooms);
   })
 
-  socket.on('sendMessage', message => {
-    const user = getUser(socket.id)
+  socket.on('send-message', message => {
+    const user = getUser(socket.id);
     io.in(user.room).emit('message', { user: user.name, text: message });
 })
 
   socket.on("disconnect", () => {
-    const user = deleteUser(socket.id)
+    const user = deleteUser(socket.id);
     if (user) {
       //io.in(user.room).emit('message', { user: user.name, text: "has left the chat!"})
       //io.in(user.room).emit('users', getUsers(user.room))

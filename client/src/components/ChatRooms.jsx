@@ -20,7 +20,7 @@ function ChatRooms() {
 
     const handleCreateRoomClose = () => {
         setOpenCreateRoom(false);
-        setRoomName('')
+        setRoomName('');
     };
 
     function openCreateRoomModal() {
@@ -29,8 +29,8 @@ function ChatRooms() {
 
     const handleCreateLockedRoomClose = () => {
         setOpenCreateLockedRoom(false);
-        setRoomName('')
-        setPassword('')
+        setRoomName('');
+        setPassword('');
     };
 
     function openCreateLockedRoomModal() {
@@ -51,35 +51,35 @@ function ChatRooms() {
     }
 
     function openJoinLockedRoomModal(room) {
-        setRoomName(room.name)
-        setPasswordModalOpen(true)
+        setRoomName(room.name);
+        setPasswordModalOpen(true);
     }
 
     
     const handleJoinLockedRoomClose = () => {
         setPasswordModalOpen(false);
-        setRoomName('')
-        setPassword('')
-        setPasswordError(false)
+        setRoomName('');
+        setPassword('');
+        setPasswordError(false);
     };
 
     function onJoinLockedRoomClick() {
-        joinLockedRoom(roomName, password)
-        setPassword('')
+        joinLockedRoom(roomName, password);
+        setPassword('');
     }
 
     const handleRoomName = (e) => {
-        setRoomName(e.target.value)
+        setRoomName(e.target.value);
     }
 
     const handlePassword = (e) => {
-        setPassword(e.target.value)
+        setPassword(e.target.value);
     }
 
     return (
         <div className="roomStyle">
             <div className="titleBox">
-                <img className="logoRooms" style={{width: '15rem', margin: '1rem' }} src={logo} alt="Logo" />
+                <img className="logoRooms" style={{width: '14rem', margin: '1rem' }} src={logo} alt="Logo" />
             </div>
             <ul>
                 <Typography variant="h6">
@@ -101,7 +101,6 @@ function ChatRooms() {
                     ))}
                 </Typography>  
             </ul>
-            <Divider />
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Button variant="contained" onClick={openCreateRoomModal} style={{margin: '2rem 0 0 0', background: 'black', color: 'white'}}>CREATE OPEN ROOM</Button>
             </div>
@@ -121,7 +120,6 @@ function ChatRooms() {
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="name"
                         label="Room name"
                         type="text"
                         onChange={handleRoomName}
@@ -142,7 +140,6 @@ function ChatRooms() {
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="name"
                         label="Room name"
                         type="text"
                         onChange={handleRoomName}
@@ -151,7 +148,6 @@ function ChatRooms() {
                     />
                     <TextField
                         margin="dense"
-                        id="password"
                         label="Password"
                         type="password"
                         onChange={handlePassword}
@@ -171,7 +167,7 @@ function ChatRooms() {
                  <DialogContent>
                     {passwordError&&
                         <div>
-                            <Typography variant="h6">
+                            <Typography variant="h6" color="secondary">
                                 Wrong password! Please try again.
                             </Typography>
                         </div>
@@ -179,7 +175,6 @@ function ChatRooms() {
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="password"
                         label="Password"
                         type="password"
                         onChange={handlePassword}

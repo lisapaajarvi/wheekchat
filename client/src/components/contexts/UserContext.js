@@ -18,7 +18,7 @@ export function UserProvider({ children }) {
     useEffect(() => {
         socket.on('connect', () => {
             console.log("Connected to server");
-            socket.emit("getRooms", {})
+            socket.emit("get-rooms", {})
         });
 
         socket.on("rooms", activeRooms => {
@@ -31,25 +31,23 @@ export function UserProvider({ children }) {
 
         socket.on("join-room-response", ({ name, success }) => {
             if (success) {
-                console.log("successfully joined room: " + name)
                 setRoom(name);
                 setMessages([]);
                 setPasswordError(false);
                 setPasswordModalOpen(false);
             } else {
-                console.log("wrong password")
-                setPasswordError(true)
+                setPasswordError(true);
             }
         })
 
     }, [socket])       
 
     const sendMessage = (message) => {
-        socket.emit('sendMessage', message)
+        socket.emit('send-message', message)
     }
 
     const saveUser = (name) => {
-        setUser(name)
+        setUser(name);
         socket.emit('login', name);
     }
 
@@ -73,7 +71,6 @@ export function UserProvider({ children }) {
 
     const joinLockedRoom = (roomName, password) => {
         socket.emit('join-room', { name: roomName, isLocked: true, password }, password);
-        console.log(roomName + password)
     }
 
     const openRooms = rooms.filter(room => room.isLocked === false);

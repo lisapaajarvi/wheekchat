@@ -50,7 +50,7 @@ function ChatConnected() {
                             onClick={handleClick}
                         >
                             SEND
-                </Button>
+                        </Button>
                     </div>
                 </>
             ) : (
