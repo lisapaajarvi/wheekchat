@@ -12,6 +12,8 @@ export function UserProvider({ children }) {
     const [messages, setMessages] = useState([]);
     const [room, setRoom] = useState();
     const [rooms, setRooms] = useState([]);
+    const [passwordError, setPasswordError] = useState(false);
+    const [passwordModalOpen, setPasswordModalOpen] = useState(false);
 
     useEffect(() => {
         socket.on('connect', () => {
@@ -24,10 +26,23 @@ export function UserProvider({ children }) {
         })        
 
         socket.on("message", msg => {
-            setMessages([...messages, msg]);
+            setMessages((prevMessages) => [...prevMessages, msg]);
+        })
+        socket.on("join-room-response", ({ name, success }) => {
+            if (success) {
+                console.log("successfully joined room: " + name)
+                setRoom(name);
+                setMessages([]);
+                setPasswordError(false);
+                setPasswordModalOpen(false);
+
+            } else {
+                console.log("wrong password")
+                setPasswordError(true)
+            }
         })
 
-        }, [messages, rooms, socket])       
+    }, [socket])       
 
     const sendMessage = (message) => {
         socket.emit('sendMessage', message)
@@ -46,19 +61,18 @@ export function UserProvider({ children }) {
     const createOpenRoom = (roomName) => {
         setRoom(roomName);
         setMessages([]);
-        socket.emit('join-room', {name: roomName, isLocked: false});
+        socket.emit('join-room', { name: roomName, isLocked: false });
     }
 
     const createLockedRoom = (roomName, password) => {
         setRoom(roomName);
         setMessages([]);
-        socket.emit('join-room', {name: roomName, isLocked: true, password: password});
+        socket.emit('join-room', { name: roomName, isLocked: true, password });
     }
 
     const joinLockedRoom = (roomName, password) => {
-        //setRoom(roomName);
-        //setMessages([]);
-        //socket.emit('join-locked-room', roomName, password);
+        socket.emit('join-room', { name: roomName, isLocked: true, password }, password);
+        console.log(roomName + password)
     }
 
     const openRooms = rooms.filter(room => room.isLocked === false);
@@ -77,7 +91,11 @@ export function UserProvider({ children }) {
             joinLockedRoom,
             sendMessage,
             openRooms,
-            closedRooms
+            closedRooms,
+            passwordError,
+            setPasswordError,
+            passwordModalOpen,
+            setPasswordModalOpen
         }}>
             {children}
         </UserContext.Provider>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Typography, Divider, Button, TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
@@ -11,15 +11,16 @@ import logo from '../assets/logo_text2.png'
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms } = useContext(UserContext);
+    const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms, passwordError, setPasswordError, passwordModalOpen, setPasswordModalOpen } = useContext(UserContext);
     
-    const [openCreateRoom, setOpenCreateRoom] = React.useState(false);
-    const [openCreateLockedRoom, setOpenCreateLockedRoom] = React.useState(false);    
-    const [roomName, setRoomName] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [openCreateRoom, setOpenCreateRoom] = useState(false);
+    const [openCreateLockedRoom, setOpenCreateLockedRoom] = useState(false);    
+    const [roomName, setRoomName] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleCreateRoomClose = () => {
         setOpenCreateRoom(false);
+        setRoomName('')
     };
 
     function openCreateRoomModal() {
@@ -28,6 +29,8 @@ function ChatRooms() {
 
     const handleCreateLockedRoomClose = () => {
         setOpenCreateLockedRoom(false);
+        setRoomName('')
+        setPassword('')
     };
 
     function openCreateLockedRoomModal() {
@@ -45,6 +48,24 @@ function ChatRooms() {
         setOpenCreateLockedRoom(false);
         setRoomName('');
         setPassword('');
+    }
+
+    function openJoinLockedRoomModal(room) {
+        setRoomName(room.name)
+        setPasswordModalOpen(true)
+    }
+
+    
+    const handleJoinLockedRoomClose = () => {
+        setPasswordModalOpen(false);
+        setRoomName('')
+        setPassword('')
+        setPasswordError(false)
+    };
+
+    function onJoinLockedRoomClick() {
+        joinLockedRoom(roomName, password)
+        setPassword('')
     }
 
     const handleRoomName = (e) => {
@@ -73,7 +94,7 @@ function ChatRooms() {
             <ul>
                 <Typography variant="h6">
                     {closedRooms.map((room, index) => (                       
-                        <li className="roomLink" style={{listStyle: 'none'}} key={index} onClick={() => joinLockedRoom(room)}>
+                        <li className="roomLink" style={{listStyle: 'none'}} key={index} onClick={() => openJoinLockedRoomModal(room)}>
                             {room.name} 
                             <LockIcon style={{marginLeft: '0.5rem'}}/> 
                         </li>
@@ -134,13 +155,41 @@ function ChatRooms() {
                         label="Password"
                         type="password"
                         onChange={handlePassword}
-                        defaultValue={password}
+                        value={password}
                         fullWidth
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCreateLockedRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
                     <Button onClick={onCreateLockedRoomClick} variant="contained" color="primary" style={{background: 'black', color: 'white'}}>CREATE</Button>
+                </DialogActions>
+            </Dialog>
+
+                        {/* Join locked room modal */}
+                        <Dialog open={passwordModalOpen} onClose={handleJoinLockedRoomClose} aria-labelledby="form-dialog-create">
+                 <DialogTitle>Join locked room @{roomName}</DialogTitle>
+                 <DialogContent>
+                    {passwordError&&
+                        <div>
+                            <Typography variant="h6">
+                                Wrong password! Please try again.
+                            </Typography>
+                        </div>
+                    }
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="password"
+                        label="Password"
+                        type="password"
+                        onChange={handlePassword}
+                        value={password}
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleJoinLockedRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
+                    <Button onClick={onJoinLockedRoomClick} variant="contained" color="primary" style={{background: '#302F4A', color: 'white'}}>JOIN</Button>
                 </DialogActions>
             </Dialog>
         </div>
