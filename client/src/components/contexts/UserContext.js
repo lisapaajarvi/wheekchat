@@ -15,33 +15,6 @@ export function UserProvider({ children }) {
     const [passwordError, setPasswordError] = useState(false);
     const [passwordModalOpen, setPasswordModalOpen] = useState(false);
 
-    // useEffect(() => {
-    //     const onMessage = msg => {
-    //         console.log('HEJ')
-    //         setMessages([...messages, msg]);
-    //     }
-
-    //     const onConnect = () => {
-    //         console.log("Connected to server");
-    //         socket.emit("getRooms", {})
-    //     }
-
-    //     const onRooms = activeRooms => {
-    //         setRooms(activeRooms);
-    //     }        
-
-    //     socket.on("message", onMessage)
-    //     socket.on("rooms", onRooms)
-    //     socket.on("connect", onConnect)
-
-    //     return () => {
-    //         socket.off("message", onMessage)
-    //         socket.off("rooms", onRooms)
-    //         socket.off("connect", onConnect)
-    //     }
-
-    // }, [messages, socket])  
-
     useEffect(() => {
         socket.on('connect', () => {
             console.log("Connected to server");
@@ -53,7 +26,6 @@ export function UserProvider({ children }) {
         })        
 
         socket.on("message", msg => {
-            console.log('HEJ')
             setMessages((prevMessages) => [...prevMessages, msg]);
         })
         socket.on("join-room-response", ({ name, success }) => {
