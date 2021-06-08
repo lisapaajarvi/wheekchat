@@ -73,6 +73,10 @@ export function UserProvider({ children }) {
         socket.emit('join-room', { name: roomName, isLocked: true, password }, password);
     }
 
+    const logOut = () => {
+        socket.emit('logout');
+    }
+
     const openRooms = rooms.filter(room => room.isLocked === false);
     const closedRooms = rooms.filter(room => room.isLocked === true);
 
@@ -93,7 +97,8 @@ export function UserProvider({ children }) {
             passwordError,
             setPasswordError,
             passwordModalOpen,
-            setPasswordModalOpen
+            setPasswordModalOpen,
+            logOut
         }}>
             {children}
         </UserContext.Provider>

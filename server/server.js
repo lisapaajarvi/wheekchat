@@ -27,8 +27,6 @@ const getUser = (id) => {
   return user
 }
 
-// const getUsers = (room) => users.filter(user => user.room === room)
-
 // ROOMS ARRAY
 const rooms = [];
 
@@ -88,9 +86,9 @@ io.on("connection", socket => {
     }
     socket.join(room.name);
     addRoom(room, socket);
-    console.log("joined room: ", room)
     socket.emit("rooms", rooms);
     socket.emit('join-room-response', { name: room.name, success: true });
+    io.emit("rooms", rooms);
   });
 
   socket.on("get-rooms", ()=> {
@@ -99,14 +97,39 @@ io.on("connection", socket => {
 
   socket.on('send-message', message => {
     const user = getUser(socket.id);
-    io.in(user.room).emit('message', { user: user.name, text: message });
+    io.in(user.room).emit('message', { user: user.name, text: message });    
+})
+
+  socket.on('logout', () => {
+    let currentUser = users.find((user) => user.id === socket.id)
+
+    
+    if(currentUser.room) {
+      socket.leave(currentUser.room);
+      deleteUser(socket.id)
+      const oldRoomUser = users.find((user) => user.room === currentUser.room);
+      
+      if (!oldRoomUser) {
+        deleteRoom(currentUser.room);
+      }
+    }
+    io.emit("rooms", rooms);
 })
 
   socket.on("disconnect", () => {
-    const user = deleteUser(socket.id);
-    if (user) {
-      //io.in(user.room).emit('message', { user: user.name, text: "has left the chat!"})
-      //io.in(user.room).emit('users', getUsers(user.room))
+    const deletedUser = deleteUser(socket.id);
+    if (deletedUser) {
+    
+      if(deletedUser.room) {
+       socket.leave(deletedUser.room);
+       const oldRoomUser = users.find((user) => user.room === deletedUser.room);
+      
+        if (!oldRoomUser) {
+          deleteRoom(deletedUser.room);
+        }
+        
+      }
+    io.emit("rooms", rooms);
     }
   })
 })

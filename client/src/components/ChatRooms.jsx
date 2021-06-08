@@ -11,13 +11,13 @@ import logo from '../assets/logo_text2.png'
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms, passwordError, setPasswordError, passwordModalOpen, setPasswordModalOpen } = useContext(UserContext);
+    const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms, passwordError, setPasswordError, passwordModalOpen, setPasswordModalOpen, logOut } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = useState(false);
     const [openCreateLockedRoom, setOpenCreateLockedRoom] = useState(false);    
     const [roomName, setRoomName] = useState('');
     const [password, setPassword] = useState('');
-
+    
     const handleCreateRoomClose = () => {
         setOpenCreateRoom(false);
         setRoomName('');
@@ -109,7 +109,7 @@ function ChatRooms() {
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Link to="/" style={{textDecoration: 'none'}}>
-                    <Button variant="contained" style={{background: 'black', color: 'white', marginBottom: '2rem'}}>LOG OUT</Button>
+                    <Button variant="contained" onClick={logOut} style={{background: 'black', color: 'white', marginBottom: '2rem'}}>LOG OUT</Button>
                 </Link>
             </div>
 
