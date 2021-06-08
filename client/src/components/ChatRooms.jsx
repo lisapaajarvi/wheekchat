@@ -78,122 +78,119 @@ function ChatRooms() {
 
     return (
         <>
-        {user ? (
-        <div className="roomStyle">
-            <div className="titleBox">
-                <img className="logoRooms" style={{width: '14rem', margin: '1rem' }} src={logo} alt="Logo" />
-            </div>
-            <ul>
-                <Typography variant="h6">
-                    {openRooms.map((room, index) => (                      
-                        <li className="roomLink" style={{listStyle: 'none'}} key={index} onClick={() => joinOpenRoom(room)}>
-                            {room.name}
-                        </li>                        
-                    ))}
-                </Typography>  
-            </ul>
-            <Divider style={{background: '#9DA1C2'}} />
-            <ul>
-                <Typography variant="h6">
-                    {closedRooms.map((room, index) => (                       
-                        <li className="roomLink" style={{listStyle: 'none'}} key={index} onClick={() => openJoinLockedRoomModal(room)}>
-                            {room.name} 
-                            <LockIcon style={{marginLeft: '0.5rem'}}/> 
-                        </li>
-                    ))}
-                </Typography>  
-            </ul>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" disabled={!user} onClick={openCreateRoomModal} style={{margin: '2rem 0 0 0', background: 'black', color: 'white'}}>CREATE OPEN ROOM</Button>
-            </div>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" disabled={!user} onClick={openCreateLockedRoomModal} style={{margin: '1rem 0 1rem 0', background: 'black', color: 'white'}}>CREATE LOCKED ROOM</Button>
-            </div>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Link to="/" style={{textDecoration: 'none'}}>
-                    <Button variant="contained" disabled={!user} onClick={logOut} style={{background: 'black', color: 'white', marginBottom: '2rem'}}>LOG OUT</Button>
-                </Link>
-            </div>
+            {user &&
+                <div className="roomStyle">
+                    <div className="titleBox">
+                        <img className="logoRooms" style={{ width: '14rem', margin: '1rem' }} src={logo} alt="Logo" />
+                    </div>
+                    <ul>
+                        <Typography variant="h6">
+                            {openRooms.map((room, index) => (
+                                <li className="roomLink" style={{ listStyle: 'none' }} key={index} onClick={() => joinOpenRoom(room)}>
+                                    {room.name}
+                                </li>
+                            ))}
+                        </Typography>
+                    </ul>
+                    <Divider style={{ background: '#9DA1C2' }} />
+                    <ul>
+                        <Typography variant="h6">
+                            {closedRooms.map((room, index) => (
+                                <li className="roomLink" style={{ listStyle: 'none' }} key={index} onClick={() => openJoinLockedRoomModal(room)}>
+                                    {room.name}
+                                    <LockIcon style={{ marginLeft: '0.5rem' }} />
+                                </li>
+                            ))}
+                        </Typography>
+                    </ul>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button variant="contained" onClick={openCreateRoomModal} style={{ margin: '2rem 0 0 0', background: 'black', color: 'white' }}>CREATE OPEN ROOM</Button>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button variant="contained" onClick={openCreateLockedRoomModal} style={{ margin: '1rem 0 1rem 0', background: 'black', color: 'white' }}>CREATE LOCKED ROOM</Button>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Link to="/" style={{ textDecoration: 'none' }}>
+                            <Button variant="contained" onClick={logOut} style={{ background: 'black', color: 'white', marginBottom: '2rem' }}>LOG OUT</Button>
+                        </Link>
+                    </div>
 
-            {/* Create room modal */}
-            <Dialog open={openCreateRoom} onClose={handleCreateRoomClose} aria-labelledby="form-dialog-create">
-                 <DialogTitle id="create">Create open room</DialogTitle>
-                 <DialogContent>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        label="Room name"
-                        type="text"
-                        onChange={handleRoomName}
-                        value={roomName}
-                        fullWidth
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCreateRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
-                    <Button onClick={onCreateRoomClick} variant="contained" color="primary" style={{background: '#302F4A', color: 'white'}}>CREATE</Button>
-                </DialogActions>
-            </Dialog>
+                    {/* Create room modal */}
+                    <Dialog open={openCreateRoom} onClose={handleCreateRoomClose} aria-labelledby="form-dialog-create">
+                        <DialogTitle id="create">Create open room</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                label="Room name"
+                                type="text"
+                                onChange={handleRoomName}
+                                value={roomName}
+                                fullWidth
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCreateRoomClose} color="primary" style={{ color: 'black' }}>GO BACK</Button>
+                            <Button onClick={onCreateRoomClick} variant="contained" color="primary" style={{ background: '#302F4A', color: 'white' }}>CREATE</Button>
+                        </DialogActions>
+                    </Dialog>
 
-            {/* Create locked room modal */}
-            <Dialog open={openCreateLockedRoom} onClose={handleCreateLockedRoomClose} aria-labelledby="form-dialog-create">
-                 <DialogTitle id="create">Create locked room</DialogTitle>
-                 <DialogContent>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        label="Room name"
-                        type="text"
-                        onChange={handleRoomName}
-                        value={roomName}
-                        fullWidth
-                    />
-                    <TextField
-                        margin="dense"
-                        label="Password"
-                        type="password"
-                        onChange={handlePassword}
-                        value={password}
-                        fullWidth
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCreateLockedRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
-                    <Button onClick={onCreateLockedRoomClick} variant="contained" color="primary" style={{background: 'black', color: 'white'}}>CREATE</Button>
-                </DialogActions>
-            </Dialog>
+                    {/* Create locked room modal */}
+                    <Dialog open={openCreateLockedRoom} onClose={handleCreateLockedRoomClose} aria-labelledby="form-dialog-create">
+                        <DialogTitle id="create">Create locked room</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                label="Room name"
+                                type="text"
+                                onChange={handleRoomName}
+                                value={roomName}
+                                fullWidth
+                            />
+                            <TextField
+                                margin="dense"
+                                label="Password"
+                                type="password"
+                                onChange={handlePassword}
+                                value={password}
+                                fullWidth
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCreateLockedRoomClose} color="primary" style={{ color: 'black' }}>GO BACK</Button>
+                            <Button onClick={onCreateLockedRoomClick} variant="contained" color="primary" style={{ background: 'black', color: 'white' }}>CREATE</Button>
+                        </DialogActions>
+                    </Dialog>
 
-            {/* Join locked room modal */}
-            <Dialog open={passwordModalOpen} onClose={handleJoinLockedRoomClose} aria-labelledby="form-dialog-create">
-                 <DialogTitle>Join locked room @{roomName}</DialogTitle>
-                 <DialogContent>
-                    {passwordError&&
-                        <div>
-                            <Typography variant="h6" color="secondary">
-                                Wrong password! Please try again.
+                    {/* Join locked room modal */}
+                    <Dialog open={passwordModalOpen} onClose={handleJoinLockedRoomClose} aria-labelledby="form-dialog-create">
+                        <DialogTitle>Join locked room @{roomName}</DialogTitle>
+                        <DialogContent>
+                            {passwordError &&
+                                <div>
+                                    <Typography variant="h6" color="secondary">
+                                        Wrong password! Please try again.
                             </Typography>
-                        </div>
-                    }
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        label="Password"
-                        type="password"
-                        onChange={handlePassword}
-                        value={password}
-                        fullWidth
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleJoinLockedRoomClose} color="primary" style={{color: 'black'}}>GO BACK</Button>
-                    <Button onClick={onJoinLockedRoomClick} variant="contained" color="primary" style={{background: '#302F4A', color: 'white'}}>JOIN</Button>
-                </DialogActions>
-            </Dialog>
-        </div>
-        ) : (
-            <>
-            </>
-            )}
+                                </div>
+                            }
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                label="Password"
+                                type="password"
+                                onChange={handlePassword}
+                                value={password}
+                                fullWidth
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleJoinLockedRoomClose} color="primary" style={{ color: 'black' }}>GO BACK</Button>
+                            <Button onClick={onJoinLockedRoomClick} disabled={!password} variant="contained" color="primary" style={{ background: '#302F4A', color: 'white' }}>JOIN</Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
+            }
         </>
     )
 }
