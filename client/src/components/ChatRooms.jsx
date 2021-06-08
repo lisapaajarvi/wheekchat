@@ -11,7 +11,7 @@ import logo from '../assets/logo_text2.png'
 import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
-    const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms, passwordError, setPasswordError, passwordModalOpen, setPasswordModalOpen, logOut } = useContext(UserContext);
+    const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms, passwordError, setPasswordError, passwordModalOpen, setPasswordModalOpen, logOut, user } = useContext(UserContext);
     
     const [openCreateRoom, setOpenCreateRoom] = useState(false);
     const [openCreateLockedRoom, setOpenCreateLockedRoom] = useState(false);    
@@ -77,6 +77,8 @@ function ChatRooms() {
     }
 
     return (
+        <>
+        {user ? (
         <div className="roomStyle">
             <div className="titleBox">
                 <img className="logoRooms" style={{width: '14rem', margin: '1rem' }} src={logo} alt="Logo" />
@@ -102,14 +104,14 @@ function ChatRooms() {
                 </Typography>  
             </ul>
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" onClick={openCreateRoomModal} style={{margin: '2rem 0 0 0', background: 'black', color: 'white'}}>CREATE OPEN ROOM</Button>
+                <Button variant="contained" disabled={!user} onClick={openCreateRoomModal} style={{margin: '2rem 0 0 0', background: 'black', color: 'white'}}>CREATE OPEN ROOM</Button>
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" onClick={openCreateLockedRoomModal} style={{margin: '1rem 0 1rem 0', background: 'black', color: 'white'}}>CREATE LOCKED ROOM</Button>
+                <Button variant="contained" disabled={!user} onClick={openCreateLockedRoomModal} style={{margin: '1rem 0 1rem 0', background: 'black', color: 'white'}}>CREATE LOCKED ROOM</Button>
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Link to="/" style={{textDecoration: 'none'}}>
-                    <Button variant="contained" onClick={logOut} style={{background: 'black', color: 'white', marginBottom: '2rem'}}>LOG OUT</Button>
+                    <Button variant="contained" disabled={!user} onClick={logOut} style={{background: 'black', color: 'white', marginBottom: '2rem'}}>LOG OUT</Button>
                 </Link>
             </div>
 
@@ -188,6 +190,11 @@ function ChatRooms() {
                 </DialogActions>
             </Dialog>
         </div>
+        ) : (
+            <>
+            </>
+            )}
+        </>
     )
 }
 

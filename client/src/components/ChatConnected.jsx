@@ -3,6 +3,7 @@ import { Typography, TextField, Button } from '@material-ui/core';
 import '../css/chatconnected.css';
 import UserContext from './contexts/UserContext';
 import logo from '../assets/logo.png'
+import { Link } from "react-router-dom";
 
 function ChatConnected() {
     const [message, setMessage] = useState('')
@@ -56,8 +57,17 @@ function ChatConnected() {
             ) : (
                 <>
                     <img className="logo" style={{ width: 180, marginTop: 30 }} src={logo} alt="Logo" />
-                    <h2>Welcome {user}!</h2>
-                    <p>Please create a new room or click on a room to join.</p>
+                    {user ? (
+
+                        <>
+                            <h2>Welcome {user}!</h2>
+                            <p>Please create a new room or click on a room to join.</p>
+                        </>
+                    ) : (
+                        <Link to="/">
+                            <h2>Please login to wheek!</h2>
+                        </Link>
+                    )}        
                 </>
             )}
         </div>
