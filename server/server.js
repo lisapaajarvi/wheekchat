@@ -43,15 +43,13 @@ const addRoom = (room, socket) => {
         deleteRoom(oldRoom);
       }
     }
-    else
-    {
+    else {
       currentUser.room = room.name;
     }
     const joinedRoom = rooms.find((r) => r.name === room.name);
     if(!joinedRoom) {
       rooms.push(room);
     }
-    socket.emit("rooms", rooms);
 }
 
 const deleteRoom = (oldRoom) => {
@@ -86,7 +84,6 @@ io.on("connection", socket => {
     }
     socket.join(room.name);
     addRoom(room, socket);
-    socket.emit("rooms", rooms);
     socket.emit('join-room-response', { name: room.name, success: true });
     io.emit("rooms", rooms);
   });
@@ -103,13 +100,13 @@ io.on("connection", socket => {
   socket.on('logout', () => {
     let currentUser = users.find((user) => user.id === socket.id)
 
-    
     if(currentUser.room) {
       socket.leave(currentUser.room);
       deleteUser(socket.id)
-      const oldRoomUser = users.find((user) => user.room === currentUser.room);
+
+      const userInSameRoom = users.find((user) => user.room === currentUser.room);
       
-      if (!oldRoomUser) {
+      if (!userInSameRoom) {
         deleteRoom(currentUser.room);
       }
     }
@@ -118,19 +115,14 @@ io.on("connection", socket => {
 
   socket.on("disconnect", () => {
     const deletedUser = deleteUser(socket.id);
-    if (deletedUser) {
-    
-      if(deletedUser.room) {
-       socket.leave(deletedUser.room);
-       const oldRoomUser = users.find((user) => user.room === deletedUser.room);
-      
-        if (!oldRoomUser) {
-          deleteRoom(deletedUser.room);
-        }
-        
-      }
-    io.emit("rooms", rooms);
+    if(deletedUser && deletedUser.room) {
+      socket.leave(deletedUser.room);
+      const userInSameRoom = users.find((user) => user.room === deletedUser.room);
+      if (!userInSameRoom) {
+        deleteRoom(deletedUser.room);
+      }        
     }
+    io.emit("rooms", rooms);
   })
 })
 

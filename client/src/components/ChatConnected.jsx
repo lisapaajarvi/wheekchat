@@ -58,7 +58,6 @@ function ChatConnected() {
                 <>
                     <img className="logo" style={{ width: 180, marginTop: 30 }} src={logo} alt="Logo" />
                     {user ? (
-
                         <>
                             <h2>Welcome {user}!</h2>
                             <p>Please create a new room or click on a room to join.</p>

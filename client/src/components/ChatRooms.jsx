@@ -12,12 +12,12 @@ import UserContext from './contexts/UserContext'
 
 function ChatRooms() {
     const { joinOpenRoom, joinLockedRoom, createOpenRoom, createLockedRoom, openRooms, closedRooms, passwordError, setPasswordError, passwordModalOpen, setPasswordModalOpen, logOut, user } = useContext(UserContext);
-    
+
     const [openCreateRoom, setOpenCreateRoom] = useState(false);
-    const [openCreateLockedRoom, setOpenCreateLockedRoom] = useState(false);    
+    const [openCreateLockedRoom, setOpenCreateLockedRoom] = useState(false);
     const [roomName, setRoomName] = useState('');
     const [password, setPassword] = useState('');
-    
+
     const handleCreateRoomClose = () => {
         setOpenCreateRoom(false);
         setRoomName('');
@@ -25,7 +25,7 @@ function ChatRooms() {
 
     function openCreateRoomModal() {
         setOpenCreateRoom(true);
-    }
+    };
 
     const handleCreateLockedRoomClose = () => {
         setOpenCreateLockedRoom(false);
@@ -36,7 +36,7 @@ function ChatRooms() {
     function openCreateLockedRoomModal() {
         setOpenCreateLockedRoom(true);
     }
-    
+
     function onCreateRoomClick() {
         createOpenRoom(roomName);
         setOpenCreateRoom(false);
@@ -55,7 +55,6 @@ function ChatRooms() {
         setPasswordModalOpen(true);
     }
 
-    
     const handleJoinLockedRoomClose = () => {
         setPasswordModalOpen(false);
         setRoomName('');
@@ -77,12 +76,13 @@ function ChatRooms() {
     }
 
     return (
-        <>
+
+        <div className="roomStyle">
+            <div className="titleBox">
+                <img className="logoRooms" style={{ width: '14rem', margin: '1rem' }} src={logo} alt="Logo" />
+            </div>
             {user &&
-                <div className="roomStyle">
-                    <div className="titleBox">
-                        <img className="logoRooms" style={{ width: '14rem', margin: '1rem' }} src={logo} alt="Logo" />
-                    </div>
+                <>
                     <ul>
                         <Typography variant="h6">
                             {openRooms.map((room, index) => (
@@ -171,7 +171,7 @@ function ChatRooms() {
                                 <div>
                                     <Typography variant="h6" color="secondary">
                                         Wrong password! Please try again.
-                            </Typography>
+                                        </Typography>
                                 </div>
                             }
                             <TextField
@@ -189,9 +189,10 @@ function ChatRooms() {
                             <Button onClick={onJoinLockedRoomClick} disabled={!password} variant="contained" color="primary" style={{ background: '#302F4A', color: 'white' }}>JOIN</Button>
                         </DialogActions>
                     </Dialog>
-                </div>
+                </>
             }
-        </>
+        </div>
+
     )
 }
 
